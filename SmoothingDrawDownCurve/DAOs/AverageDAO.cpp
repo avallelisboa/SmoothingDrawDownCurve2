@@ -104,18 +104,22 @@ int getAveragesCreatedNumber(Account* theAccount, const char* filePath)
 
 	return averagesNumber;
 }
-bool saveAverageCreatedNumber(Account* theAccount, size_t theAveragesNumber, const char* filePath) {
+bool increaseAverageCreatedNumber(Account* theAccount, const char* filePath) {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_averagesNumber.bin";
 	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
+	size_t averagesCreatedNumber = 0;
+
+	std::fstream file;
 	file.open(fullName, std::ios::binary);
 	if (file.is_open()) {
+		file.read((char*)&averagesCreatedNumber, sizeof(size_t));
+		averagesCreatedNumber++;
 		file.clear();
-		file.write((char*)&theAveragesNumber, sizeof(size_t));
+		file.write((char*)&averagesCreatedNumber, sizeof(size_t));
 		file.close();
 	} else return false;
 

@@ -99,20 +99,26 @@ int getEquitiesCreatedNumber(Account* theAccount, const char* filePath) {
 
 	return equitiesNumber;
 }
-bool saveEquitiesCreatedNumber(Account* theAccount, size_t theEquitiesNumber, const char* filePath) {
+bool increaseEquityCreatedNumber(Account* theAccount, const char* filePath)
+{
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_equitiesNumber.bin";
 	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
+	size_t equitiesCreatedNumber = 0;
+
+	std::fstream file;
 	file.open(fullName, std::ios::binary);
 	if (file.is_open()) {
+		file.read((char*)&equitiesCreatedNumber, sizeof(size_t));
+		equitiesCreatedNumber++;
 		file.clear();
-		file.write((char*)&theEquitiesNumber, sizeof(size_t));
+		file.write((char*)&equitiesCreatedNumber, sizeof(size_t));
 		file.close();
-	}else return false;
+	}
+	else return false;
 
 	return true;
 }

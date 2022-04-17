@@ -108,18 +108,23 @@ int getRsCreatedNumber(Account* theAccount, const char* filePath)
 
 	return rsNumber;
 }
-bool saveRsCreatedNumber(Account* theAccount, size_t theRsCreatedNumber, const char* filePath) {
+bool increaseRsCreatedNumber(Account* theAccount, const char* filePath)
+{
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_rsNumber.bin";
 	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
+	size_t rsCreatedNumber = 0;
+
+	std::fstream file;
 	file.open(fullName, std::ios::binary);
 	if (file.is_open()) {
+		file.read((char*)&rsCreatedNumber, sizeof(size_t));
+		rsCreatedNumber++;
 		file.clear();
-		file.write((char*)&theRsCreatedNumber, sizeof(size_t));
+		file.write((char*)&rsCreatedNumber, sizeof(size_t));
 		file.close();
 	}
 	else return false;
