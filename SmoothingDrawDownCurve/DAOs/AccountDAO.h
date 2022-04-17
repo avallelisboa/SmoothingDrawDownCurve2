@@ -10,8 +10,8 @@
 #include <cstring>
 
 bool saveAccount(Account* theAccount, const char* filePath);
+bool updateAccountList(std::list<Account*>& theAccountList, const char* filePath);
 std::list<Account*> getAccounts(const char* filePath);
-std::list<Account*> getNAccount(const char* filePath, size_t startingIndex, size_t endingIndex);
 int getAccountsCreatedNumber(const char* filePath);
 bool increaseAccountsCreatedNumber(const char* filePath);
-bool updateAccount(Account* theAccount, const char* filePath);
+bool decreaseAccountsCreatedNumber(const char* filePath);

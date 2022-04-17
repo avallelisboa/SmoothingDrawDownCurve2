@@ -21,6 +21,29 @@ bool saveAccount(Account* theAccount, const char* filePath)
 
 	return true;
 }
+bool updateAccountList(std::list<Account*>& theAccountList, const char* filePath)
+{
+	const char* fileName = "accounts.bin";
+	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
+	strcat(fullName, filePath);
+	strcat(fullName, fileName);
+
+	std::ofstream file;
+	remove(fullName);
+	file.open(fullName, std::ios::binary);
+	if (file.is_open()) {
+		auto it = theAccountList.begin();
+		while (it != theAccountList.end()) {
+			AccountFile af = makeAccountFile(*it);
+			file.write((char*)&af, sizeof(AccountFile));
+			it++;
+		}
+		file.close();
+	}
+	else return false;
+
+	return true;
+}
 std::list<Account*> getAccounts(const char* filePath)
 {
 	std::list<Account*> accounts;
@@ -46,39 +69,6 @@ std::list<Account*> getAccounts(const char* filePath)
 
 	return accounts;
 }
-
-std::list<Account*> getNAccount(const char* filePath, size_t startingIndex, size_t endingIndex)
-{
-	std::list<Account*> accounts;
-
-	const char* fileName = "accounts.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
-
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
-
-	if (file.is_open()) {
-		size_t count = startingIndex;
-		//Skips the registers we do not want to return
-		file.seekg(startingIndex * sizeof(AccountFile), std::ios_base::beg);
-
-		while (!file.eof() && count <= endingIndex) {
-			AccountFile aAccountFile;
-			file.read((char*)&aAccountFile, sizeof(AccountFile));
-
-			Account* aAccount = makeAccount(&aAccountFile);
-			accounts.push_back(aAccount);
-
-			count++;
-		}
-		file.close();
-	}
-
-	return accounts;
-}
-
 int getAccountsCreatedNumber(const char* filePath)
 {
 	const char* fileName = "accountsNumber.bin";
@@ -113,6 +103,7 @@ bool increaseAccountsCreatedNumber(const char* filePath)
 	if (file.is_open()) {
 		file.read((char*)&Count, sizeof(int));
 		Count++;
+		file.clear();
 		file.write((char*)&Count, sizeof(int));
 		file.close();
 	}else return false;
@@ -120,7 +111,26 @@ bool increaseAccountsCreatedNumber(const char* filePath)
 	return true;
 }
 
-bool updateAccount(Account* theAccount, const char* filePath)
+bool decreaseAccountsCreatedNumber(const char* filePath)
 {
-	return false;
+	const char* fileName = "accountsNumber.bin";
+	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
+	strcat(fullName, filePath);
+	strcat(fullName, fileName);
+
+	int Count = 0;
+
+	std::fstream file;
+	file.open(fullName, std::ios::binary);
+
+	if (file.is_open()) {
+		file.read((char*)&Count, sizeof(int));
+		Count--;
+		file.clear();
+		file.write((char*)&Count, sizeof(int));
+		file.close();
+	}
+	else return false;
+
+	return true;
 }
