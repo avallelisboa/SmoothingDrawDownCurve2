@@ -1,16 +1,16 @@
 #include "AccountBL.h"
 
 
-float calculateAverage(std::list<int>& values, size_t periodsNumber)
+float calculateAverage(std::list<Equity*>& values, size_t periodsNumber)
 {
 	if(values.size() == 0 || values.size() < periodsNumber)
 		return 0.0f;
 	
 	int sum = 0;
-	std::list<int>::iterator it = values.end();
+	std::list<Equity*>::iterator it = values.end();
 	it--;
 	for (size_t count = 0; count < periodsNumber; count++) {
-		sum += *it;
+		sum += (*it)->equity;
 		if(count < periodsNumber -1)
 			it--;
 	}
@@ -18,36 +18,52 @@ float calculateAverage(std::list<int>& values, size_t periodsNumber)
 	return average;
 }
 
+int _calculateEquity(std::list<Equity*>& values, R* r)
+{
+	int lastEquity = (values.back()--)->equity;
+	int newEquity = lastEquity + r->value;
+	return newEquity;
+}
+
 bool isGhostMode(int lastEquity, float lastAverage)
 {
 	return lastEquity < lastAverage;
 }
 
-void makeAccountBL(Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
+void makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	accountCollection.push_back(theAccount);
-	count++;
+	count = getAccountsCreatedNumber(filePath);
 }
 
-void deleteAccountBL(Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
+void deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	accountCollection.remove(theAccount);
 	count--;
 }
 
-std::list<Account*>& getAccountsBL()
+std::list<Account*> getAccountsBL(const char* filePath)
 {
-	getAccounts();
+	std::list<Account*> accounts = getAccounts(filePath);
+	return accounts;
 }
 
-void addRBL(Account* theAccount, int r)
+void addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData)
 {
-	AccountDataToAdd aData;
-	aData.R = r;
-	int acum = *(theAccount->GetEquitiesList().end()--);
-	aData.Equity = acum + r;
-	auto equitites = theAccount->GetEquitiesList();
-	aData.Average = calculateAverage(equitites,14);
+	auto eqsList = theAccount->GetEquitiesList();
+	R* r = theData.r;
+	int equity = _calculateEquity(eqsList, r);
+	float average = calculateAverage(eqsList, 14);
+	theData.equity->equity = equity;
+	theData.average->average = average;
+	theAccount->AddData(theData);
 
-	theAccount->AddData(aData);
+	saveR(theAccount, r, filePath);
+	saveEquity(theAccount, theData.equity, filePath);
+	saveAverage(theAccount, theData.average, filePath);
+}
+
+void updateAccountBL(const char* filePath, Account* theAccount)
+{
+	updateAccount(theAccount, filePath);
 }

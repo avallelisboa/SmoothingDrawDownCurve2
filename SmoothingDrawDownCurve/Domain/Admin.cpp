@@ -6,22 +6,22 @@ void Admin::Init() {
 	_loadData();
 }
 void Admin::_loadData() {
-	m_Accounts = getAccountsBL();
+	m_Accounts = getAccountsBL(m_FilePath);
 }
 void Admin::OpenAccount(Account* theAccount) {
 	m_OpenAccounts.push_back(theAccount);
 }
 void Admin::MakeAccount(char name[20]) {
 	Account* aAccount = new Account(m_AccountsCount, name);
-	makeAccountBL(aAccount, m_Accounts, m_AccountsCount);
+	makeAccountBL(m_FilePath, aAccount, m_Accounts, m_AccountsCount);
 }
 void Admin::UpateAccount(Account* account)
 {
-	updateAccount(account);
+	updateAccountBL(m_FilePath, account);
 }
 void Admin::DeleteAccount(Account* account)
 {
-	deleteAccountBL(account, m_Accounts, m_AccountsCount);
+	deleteAccountBL(m_FilePath, account, m_Accounts, m_AccountsCount);
 }
 void Admin::ExitAccount(Account* account) {
 	m_OpenAccounts.remove(account);

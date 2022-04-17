@@ -20,8 +20,9 @@ public:
 	void ExitAccount(Account* account);
 	bool SaveData();
 private:
-	Admin() : m_AccountsCount(0) {}
+	Admin() : m_AccountsCount(0), m_FilePath("../Data/") {}
 	~Admin();
+	const char* m_FilePath;
 	void _loadData();
 	static Admin s_Instance;
 	size_t m_AccountsCount;

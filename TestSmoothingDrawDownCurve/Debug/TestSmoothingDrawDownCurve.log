@@ -1,6 +1,6 @@
-﻿  pch.cpp
-  TestAccountCRUD.cpp
+﻿  TestAccountCRUD.cpp
   TestAverageCalculation.cpp
+  TestAverageCalculationMockUpData.cpp
   Generating Code...
      Creating library C:\Users\avall\Documents\Andrés\Programación\Code\Trading\SmoothingDrawDownCurve\Debug\TestSmoothingDrawDownCurve.lib and object C:\Users\avall\Documents\Andrés\Programación\Code\Trading\SmoothingDrawDownCurve\Debug\TestSmoothingDrawDownCurve.exp
   TestSmoothingDrawDownCurve.vcxproj -> C:\Users\avall\Documents\Andrés\Programación\Code\Trading\SmoothingDrawDownCurve\Debug\TestSmoothingDrawDownCurve.dll

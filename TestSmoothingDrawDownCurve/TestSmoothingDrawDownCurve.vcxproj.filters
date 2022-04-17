@@ -18,15 +18,15 @@
     <ClCompile Include="TestAverageCalculation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="TestAccountCRUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestAccountCRUD.cpp">
+    <ClCompile Include="TestMockUpData\TestAverageCalculationMockUpData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="TestMockUpData\TestAverageCalculationMockUpData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "CppUnitTest.h"
 #include "../BusinessLogic/AccountBL.h"
 #include "Admin.h"
@@ -16,7 +15,7 @@ namespace TestSmoothingDrawDownCurve {
 		}
 		TEST_METHOD(TestAddAccount) {
 			int expectedCount = 1;
-			Admin::Get().MakeAccount("testaccount", "account to test");
+			Admin::Get().MakeAccount("testaccount");
 			int countObtained = Admin::Get().GetAccountsCount();
 			Assert::AreEqual(expectedCount, countObtained);
 		}

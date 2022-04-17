@@ -1,54 +1,7 @@
 #include "AccountDAO.h"
 
-bool _saveEquitieData(Account* theAccount, std::list<int>& eqs) {
-	const char* filePath = "../Data/";
-	const char* accountName = theAccount->Name();
-	const char* fileName = "_eqs.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName) + sizeof(fileName));
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
-
-	std::ofstream file;
-	file.open(fullName, std::ios::binary);
-	
-	if (file.is_open()) {
-		auto it = eqs.begin();
-		while (it != eqs.end()) {
-			EquityFile ef = makeEquityFile(theAccount->Id(), )
-		}
-	}
-
-}
-bool _saveRsData(Account* theAccount, std::list<int>& rs) {
-	const char* filePath = "../Data/";
-	const char* accountName = theAccount->Name();
-	const char* fileName = "_rs.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName) + sizeof(fileName));
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
-
-	std::ofstream file;
-	file.open(fullName, std::ios::binary);
-
-	if (file.is_open()) {
-		auto it = rs.begin();
-		while (it != rs.end()) {
-			int rIndex = &(*it) - &(*rs.begin());
-			RFile af = makeRFile(theAccount->Id(), rIndex, *it);
-
-			file.write((char*)&af, sizeof(RFile));
-			it++;
-		}
-	}
-}
-bool _saveAccountData(Account* theAccount) {
-	return false;
-}
-bool saveAccounts(std::list<Account*> accountsList)
+bool saveAccount(Account* theAccount, const char* filePath)
 {
-	const char* filePath = "../Data/";
 	const char* fileName = "accounts.bin";
 	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
 	strcat(fullName, filePath);
@@ -57,24 +10,21 @@ bool saveAccounts(std::list<Account*> accountsList)
 	std::ofstream file;
 	file.open(fullName, std::ios::binary);
 
-	auto it = accountsList.begin();
 	if (file.is_open()) {
-		while (it != accountsList.end()) {
-			AccountFile af = makeAccountFile(*it);
-			file.write((char*)&af, sizeof(AccountFile));
-			it++;
-		}
-	}
-	else return false;
+		AccountFile af = makeAccountFile(theAccount);
 
-	file.close();
+		//Goes to the end
+		file.seekp(0, std::ios_base::end);
+		file.write((char*)&af, sizeof(AccountFile));
+		file.close();
+	}else return false;
 
 	return true;
 }
-std::list<Account*> _loadAccountsFromsFile() {
+std::list<Account*> getAccounts(const char* filePath)
+{
 	std::list<Account*> accounts;
 
-	const char* filePath = "../Data/";
 	const char* fileName = "accounts.bin";
 	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
 	strcat(fullName, filePath);
@@ -85,28 +35,22 @@ std::list<Account*> _loadAccountsFromsFile() {
 
 	if (file.is_open()) {
 		while (!file.eof()) {
-			Account* aAccount = new Account();
-			file.read((char*)aAccount, sizeof(Account));
+			AccountFile aAccountFile;
+			file.read((char*)&aAccountFile, sizeof(AccountFile));
+
+			Account* aAccount = makeAccount(&aAccountFile);
 			accounts.push_back(aAccount);
 		}
+		file.close();
 	}
-
-	file.close();
 
 	return accounts;
 }
-std::list<Account*> getAccounts()
+
+std::list<Account*> getNAccount(const char* filePath, size_t startingIndex, size_t endingIndex)
 {
 	std::list<Account*> accounts;
 
-	
-}
-
-std::list<Account*> getNAccount(size_t startingIndex, size_t endingIndex)
-{
-	std::list<Account*> accounts;
-
-	const char* filePath = "../Data/";
 	const char* fileName = "accounts.bin";
 	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
 	strcat(fullName, filePath);
@@ -116,19 +60,67 @@ std::list<Account*> getNAccount(size_t startingIndex, size_t endingIndex)
 	file.open(fullName, std::ios::binary);
 
 	if (file.is_open()) {
-		while (!file.eof()) {
-			Account* aAccount = new Account();
-			file.read((char*)aAccount, sizeof(Account));
-			accounts.push_back(aAccount);
-		}
-	}
+		size_t count = startingIndex;
+		//Skips the registers we do not want to return
+		file.seekg(startingIndex * sizeof(AccountFile), std::ios_base::beg);
 
-	file.close();
+		while (!file.eof() && count <= endingIndex) {
+			AccountFile aAccountFile;
+			file.read((char*)&aAccountFile, sizeof(AccountFile));
+
+			Account* aAccount = makeAccount(&aAccountFile);
+			accounts.push_back(aAccount);
+
+			count++;
+		}
+		file.close();
+	}
 
 	return accounts;
 }
 
-int getAccountsCreatedNumber()
+int getAccountsCreatedNumber(const char* filePath)
 {
-	return 0;
+	const char* fileName = "accountsNumber.bin";
+	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
+	strcat(fullName, filePath);
+	strcat(fullName, fileName);
+
+	int accountsNumber = 0;
+
+	std::ifstream file;
+	file.open(fullName, std::ios::binary);
+
+	if (file.is_open()) {
+		file.read((char*)&accountsNumber, sizeof(int));
+		file.close();
+	}
+	return accountsNumber;
+}
+
+bool increaseAccountsCreatedNumber(const char* filePath)
+{
+	const char* fileName = "accountsNumber.bin";
+	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName));
+	strcat(fullName, filePath);
+	strcat(fullName, fileName);
+
+	int Count = 0;
+
+	std::fstream file;
+	file.open(fullName, std::ios::binary);
+
+	if (file.is_open()) {
+		file.read((char*)&Count, sizeof(int));
+		Count++;
+		file.write((char*)&Count, sizeof(int));
+		file.close();
+	}else return false;
+
+	return true;
+}
+
+bool updateAccount(Account* theAccount, const char* filePath)
+{
+	return false;
 }

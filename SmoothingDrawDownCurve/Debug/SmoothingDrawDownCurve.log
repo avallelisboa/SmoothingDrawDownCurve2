@@ -1,5 +1,9 @@
 ﻿  AccountBL.cpp
   AccountDAO.cpp
+  AverageDAO.cpp
+  EquityDAO.cpp
+  Parser.cpp
+  RDAO.cpp
   Account.cpp
   Admin.cpp
   main.cpp
@@ -11,9 +15,5 @@
   imgui_tables.cpp
   imgui_widgets.cpp
   Generating Code...
-Debug\Account.obj : warning LNK4042: object specified more than once; extras ignored
-Debug\AccountBL.obj : warning LNK4042: object specified more than once; extras ignored
-Debug\AccountDAO.obj : warning LNK4042: object specified more than once; extras ignored
-Debug\Admin.obj : warning LNK4042: object specified more than once; extras ignored
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   SmoothingDrawDownCurve.vcxproj -> C:\Users\avall\Documents\Andrés\Programación\Code\Trading\SmoothingDrawDownCurve\Debug\SmoothingDrawDownCurve.exe

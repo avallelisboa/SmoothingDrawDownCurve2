@@ -1,12 +1,17 @@
 #pragma once
+
 #include "../Domain/Models/Account.h"
 #include "FileObjects/AccountFile.h"
-#include "../DAOs/Parsing/Parser.h"
-#include <vector>
+#include "FileObjects/AverageFile.h"
+#include "FileObjects/EquityFile.h"
+#include "FileObjects/RFile.h"
+#include "Parsing/Parser.h"
 #include <fstream>
 #include <cstring>
 
-bool saveAccounts(std::list<Account*> accountsList);
-std::list<Account*> getAccounts();
-std::list<Account*> getNAccount(size_t startingIndex, size_t endingIndex);
-int getAccountsCreatedNumber();
+bool saveAccount(Account* theAccount, const char* filePath);
+std::list<Account*> getAccounts(const char* filePath);
+std::list<Account*> getNAccount(const char* filePath, size_t startingIndex, size_t endingIndex);
+int getAccountsCreatedNumber(const char* filePath);
+bool increaseAccountsCreatedNumber(const char* filePath);
+bool updateAccount(Account* theAccount, const char* filePath);

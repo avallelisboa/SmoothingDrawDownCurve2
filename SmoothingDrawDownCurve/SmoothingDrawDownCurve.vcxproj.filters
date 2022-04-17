@@ -51,6 +51,18 @@
     <ClCompile Include="BusinessLogic\AccountBL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DAOs\RDAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DAOs\EquityDAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DAOs\AverageDAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DAOs\Parsing\Parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vendor\imgui\imconfig.h">
@@ -92,7 +104,7 @@
     <ClInclude Include="BusinessLogic\AccountBL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Domain\Models\AccountDataToAdd.h">
+    <ClInclude Include="Domain\Models\Structures\AccountDataToAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DAOs\FileObjects\AccountFile.h">
@@ -110,14 +122,26 @@
     <ClInclude Include="DAOs\FileObjects\AverageFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Models\Structures\R.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Models\Structures\Equity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Models\Structures\Average.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\RDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\EquityDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\AverageDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Vendor\libs\glfw3.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Debug\Account.obj" />
-    <Object Include="Debug\AccountBL.obj" />
-    <Object Include="Debug\AccountDAO.obj" />
-    <Object Include="Debug\Admin.obj" />
   </ItemGroup>
 </Project>
