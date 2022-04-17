@@ -33,13 +33,17 @@ bool isGhostMode(int lastEquity, float lastAverage)
 void makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	accountCollection.push_back(theAccount);
+	saveAccount(theAccount, filePath);
+	increaseAccountsCreatedNumber(filePath);
 	count = getAccountsCreatedNumber(filePath);
 }
 
 void deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	accountCollection.remove(theAccount);
-	count--;
+	updateAccountList(accountCollection, filePath);
+	decreaseAccountsCreatedNumber(filePath);
+	count = getAccountsCreatedNumber(filePath);
 }
 
 std::list<Account*> getAccountsBL(const char* filePath)
@@ -59,11 +63,9 @@ void addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData
 	theAccount->AddData(theData);
 
 	saveR(theAccount, r, filePath);
+	increaseRsCreatedNumber(theAccount, filePath);
 	saveEquity(theAccount, theData.equity, filePath);
+	increaseEquityCreatedNumber(theAccount, filePath);
 	saveAverage(theAccount, theData.average, filePath);
-}
-
-void updateAccountBL(const char* filePath, Account* theAccount)
-{
-	updateAccount(theAccount, filePath);
+	increaseAverageCreatedNumber(theAccount, filePath);
 }
