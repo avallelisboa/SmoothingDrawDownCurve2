@@ -7,6 +7,7 @@ void Admin::Init() {
 }
 void Admin::_loadData() {
 	m_Accounts = getAccountsBL(m_FilePath);
+	m_AccountsCount = getAccountsCountBL(m_FilePath);
 }
 void Admin::OpenAccount(Account* theAccount) {
 	m_OpenAccounts.push_back(theAccount);

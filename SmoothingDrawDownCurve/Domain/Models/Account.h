@@ -1,3 +1,4 @@
+#pragma once
 #pragma warning(suppress : 4996)
 
 #include <cstring>
@@ -7,7 +8,8 @@
 #include "Structures/Equity.h"
 #include "Structures/R.h"
 
-#pragma once
+
+
 class Account
 {
 private:
@@ -21,6 +23,8 @@ public:
 	Account(int index, char* name);
 	inline const int Id() const { return m_Index; }
 	inline const char* Name() const { return m_Name;}
+	void SetName(const char* theName);
+	void LoadData(std::list<R*>& rs, std::list<Equity*>& eqs, std::list<Average*>& ma);
 	inline const std::list<R*>& GetRsList() const { return m_Rs; }
 	inline const std::list<Equity*>& GetEquitiesList() const { return m_Equities; }
 	inline const std::list<Average*>& GetMovingAverage() const { return m_MovingAverage; }

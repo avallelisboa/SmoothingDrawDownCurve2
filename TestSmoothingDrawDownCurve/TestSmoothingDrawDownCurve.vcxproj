@@ -159,12 +159,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="TestAccountCRUD.cpp" />
-    <ClCompile Include="TestMockUpData\TestAccountCRUDMockUp.cpp" />
     <ClCompile Include="TestAverageCalculation.cpp" />
     <ClCompile Include="TestMockUpData\TestAverageCalculationMockUpData.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TestMockUpData\TestAccountCRUDMockUp.h" />
     <ClInclude Include="TestMockUpData\TestAverageCalculationMockUpData.h" />
   </ItemGroup>
   <ItemGroup>

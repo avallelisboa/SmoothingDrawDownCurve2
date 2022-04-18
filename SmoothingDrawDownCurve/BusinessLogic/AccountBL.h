@@ -13,6 +13,7 @@ float calculateAverage(std::list<Equity*>& values, size_t periodsNumber);
 bool isGhostMode(int lastEquity, float lastAverage);
 void makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
 void addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData);
-void updateAccountBL(const char* filePath, Account* theAccount);
+size_t getAccountsCountBL(const char* filePath);
+void updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection);
 void deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
 std::list<Account*> getAccountsBL(const char* filePath);

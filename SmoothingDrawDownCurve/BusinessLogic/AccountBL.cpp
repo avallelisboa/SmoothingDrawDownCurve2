@@ -49,6 +49,14 @@ void deleteAccountBL(const char* filePath, Account* theAccount, std::list<Accoun
 std::list<Account*> getAccountsBL(const char* filePath)
 {
 	std::list<Account*> accounts = getAccounts(filePath);
+	auto it = accounts.begin();
+	while (it != accounts.end()) {
+		auto rs = getRs(*it, filePath);
+		auto eqs = getEquities(*it, filePath);
+		auto ma = getMovingAverage(*it, filePath);
+		(*it)->LoadData(rs, eqs, ma);
+	}
+
 	return accounts;
 }
 
@@ -68,4 +76,22 @@ void addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData
 	increaseEquityCreatedNumber(theAccount, filePath);
 	saveAverage(theAccount, theData.average, filePath);
 	increaseAverageCreatedNumber(theAccount, filePath);
+}
+
+size_t getAccountsCountBL(const char* filePath)
+{
+	return getAccountsCreatedNumber(filePath);
+}
+
+void updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection)
+{
+	auto it = accountCollection.begin();
+	while (it != accountCollection.end()) {
+		if ((*it)->Id() == theAccount->Id()) {
+			(*it)->SetName(theAccount->Name());
+			break;
+		}
+		it++;
+	}
+	updateAccountList(accountCollection, filePath);
 }
