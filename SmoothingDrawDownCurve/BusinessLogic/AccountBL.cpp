@@ -63,14 +63,16 @@ std::list<Account*> getAccountsBL(const char* filePath)
 void addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData)
 {
 	auto eqsList = theAccount->GetEquitiesList();
-	R* r = theData.r;
-	int equity = _calculateEquity(eqsList, r);
+	int equity = _calculateEquity(eqsList, theData.r);
 	float average = calculateAverage(eqsList, 14);
+	theData.r->index = getRsCreatedNumber(theAccount, filePath);
 	theData.equity->equity = equity;
+	theData.equity->index = getEquitiesCreatedNumber(theAccount, filePath);
 	theData.average->average = average;
+	theData.average->index = getAveragesCreatedNumber(theAccount, filePath);
 	theAccount->AddData(theData);
 
-	saveR(theAccount, r, filePath);
+	saveR(theAccount, theData.r, filePath);
 	increaseRsCreatedNumber(theAccount, filePath);
 	saveEquity(theAccount, theData.equity, filePath);
 	increaseEquityCreatedNumber(theAccount, filePath);
