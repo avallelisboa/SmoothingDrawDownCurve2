@@ -2,7 +2,7 @@
 
 TestAverageCalculationMockUpData::TestAverageCalculationMockUpData()
 {
-	OneElementList.push_back(0);
+	m_OneElementList.push_back(0);
 	_fillNumberOfElementsEqualsToPeriodsNumberList();
 	_fillNumberOfElementsHigherThanPeriodsNumberList();
 }
@@ -15,18 +15,18 @@ TestAverageCalculationMockUpData::~TestAverageCalculationMockUpData()
 void TestAverageCalculationMockUpData::_cleanUp()
 {
 
-	auto oneElementListIt = OneElementList.begin();
+	auto oneElementListIt = m_OneElementList.begin();
 	delete (*oneElementListIt);
 	oneElementListIt++;
 
-	auto numberOfElementsEqualsToPeriodsNumberListIt = NumberOfElementsEqualsToPeriodsNumberList.begin();
-	while (numberOfElementsEqualsToPeriodsNumberListIt != NumberOfElementsEqualsToPeriodsNumberList.end()) {
+	auto numberOfElementsEqualsToPeriodsNumberListIt = m_NumberOfElementsEqualsToPeriodsNumberList.begin();
+	while (numberOfElementsEqualsToPeriodsNumberListIt != m_NumberOfElementsEqualsToPeriodsNumberList.end()) {
 		delete (*numberOfElementsEqualsToPeriodsNumberListIt);
 		numberOfElementsEqualsToPeriodsNumberListIt++;
 	}
 
-	auto numberOfElementsHigherThanPeriodsNumberListIt = NumberOfElementsHigherThanPeriodsNumberList.begin();
-	while (numberOfElementsHigherThanPeriodsNumberListIt != NumberOfElementsHigherThanPeriodsNumberList.end()) {
+	auto numberOfElementsHigherThanPeriodsNumberListIt = m_NumberOfElementsHigherThanPeriodsNumberList.begin();
+	while (numberOfElementsHigherThanPeriodsNumberListIt != m_NumberOfElementsHigherThanPeriodsNumberList.end()) {
 		delete (*numberOfElementsHigherThanPeriodsNumberListIt);
 		numberOfElementsHigherThanPeriodsNumberListIt++;
 	}
@@ -36,88 +36,88 @@ void TestAverageCalculationMockUpData::_fillNumberOfElementsEqualsToPeriodsNumbe
 {
 	Equity* eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsEqualsToPeriodsNumberList.push_back(eq);
 }
 
 void TestAverageCalculationMockUpData::_fillNumberOfElementsHigherThanPeriodsNumberList()
 {
 	Equity* eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq); eq = new Equity();
 	eq->equity = -1;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 	eq = new Equity();
 	eq->equity = 2;
-	NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
+	m_NumberOfElementsHigherThanPeriodsNumberList.push_back(eq);
 }

@@ -8,17 +8,21 @@
 class TestAverageCalculationMockUpData
 {
 	private:
+		std::list<Equity*> m_EmptyListValues;
+		std::list<Equity*> m_OneElementList;
+		std::list<Equity*> m_NumberOfElementsEqualsToPeriodsNumberList;
+		std::list<Equity*> m_NumberOfElementsHigherThanPeriodsNumberList;
+
 		void _cleanUp();
 		void _fillNumberOfElementsEqualsToPeriodsNumberList();
 		void _fillNumberOfElementsHigherThanPeriodsNumberList();
 
 	public:
-		std::list<Equity*> EmptyListValues;
-		std::list<Equity*> OneElementList;
-		std::list<Equity*> NumberOfElementsEqualsToPeriodsNumberList;
-		std::list<Equity*> NumberOfElementsHigherThanPeriodsNumberList;
+		inline std::list<Equity*>& GetEmptyListValues() { return m_EmptyListValues; }
+		inline std::list<Equity*>& GetOneElementList() { return m_OneElementList; }
+		inline std::list<Equity*>& GetNumberOfElementsEqualsToPeriodsNumberList() { return  m_NumberOfElementsEqualsToPeriodsNumberList; }
+		inline std::list<Equity*>& GetNumberOfElementsHigherThanPeriodsNumberList() { return m_NumberOfElementsHigherThanPeriodsNumberList;  }
 
 		TestAverageCalculationMockUpData();
 		~TestAverageCalculationMockUpData();
-
 };
