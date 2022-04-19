@@ -18,6 +18,7 @@ public:
 	inline const std::list<Account*> GetOpenAccounts() const { return m_OpenAccounts; }
 	inline const std::list<Account*> GetAccounts() const { return m_Accounts; }
 	inline const std::size_t GetAccountsCount() const { return m_AccountsCount; }
+	void AddR(Account* theAccount, int r);
 	void MakeAccount(char name[20]);
 	void DeleteAccount(Account* account);
 	void ExitAccount(Account* account);

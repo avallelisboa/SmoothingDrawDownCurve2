@@ -12,6 +12,16 @@ void Admin::_loadData() {
 void Admin::OpenAccount(Account* theAccount) {
 	m_OpenAccounts.push_back(theAccount);
 }
+void Admin::AddR(Account* theAccount, int r)
+{
+	AccountDataToAdd theDataToAdd;
+	theDataToAdd.r = new R();
+	theDataToAdd.r->value = r;
+	theDataToAdd.equity = new Equity();
+	theDataToAdd.average = new Average();
+
+	addRBL(m_FilePath, theAccount, theDataToAdd);
+}
 void Admin::MakeAccount(char name[20]) {
 	Account* aAccount = new Account(m_AccountsCount, name);
 	makeAccountBL(m_FilePath, aAccount, m_Accounts, m_AccountsCount);

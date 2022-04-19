@@ -8,8 +8,6 @@
 #include "Structures/Equity.h"
 #include "Structures/R.h"
 
-
-
 class Account
 {
 private:
@@ -31,4 +29,3 @@ public:
 
 	void AddData(AccountDataToAdd& theDataToAdd);
 };
-
