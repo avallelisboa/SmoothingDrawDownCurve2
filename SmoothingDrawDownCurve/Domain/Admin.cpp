@@ -26,9 +26,13 @@ CreateAccountResult Admin::MakeAccount(char name[20]) {
 	Account* aAccount = new Account(m_AccountsCount, name);
 	return makeAccountBL(m_FilePath, aAccount, m_Accounts, m_AccountsCount);
 }
-void Admin::DeleteAccount(Account* account)
+UpdateAccountResult Admin::UpdateAccount(Account* theAccount, const char* filePath)
 {
-	deleteAccountBL(m_FilePath, account, m_Accounts, m_AccountsCount);
+	return updateAccountBL(filePath, theAccount, m_Accounts);
+}
+DeleteAccountResult Admin::DeleteAccount(Account* account)
+{
+	return deleteAccountBL(m_FilePath, account, m_Accounts, m_AccountsCount);
 }
 void Admin::ExitAccount(Account* account) {
 	m_OpenAccounts.remove(account);

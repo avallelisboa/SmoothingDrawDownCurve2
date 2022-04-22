@@ -1,9 +1,10 @@
 #pragma once
 
-#include <vector>
 #include "../BusinessLogic/AccountBL.h"
 #include "../DAOs/AccountDAO.h"
 #include "Models/ValidationModels/CreateAccountResult.h"
+#include "Models/ValidationModels/UpdateAccountResult.h"
+#include "Models/ValidationModels/DeleteAccountResult.h"
 
 class Admin
 {
@@ -21,7 +22,8 @@ public:
 	inline const std::size_t GetAccountsCount() const { return m_AccountsCount; }
 	void AddR(Account* theAccount, int r);
 	CreateAccountResult MakeAccount(char name[20]);
-	void DeleteAccount(Account* account);
+	UpdateAccountResult UpdateAccount(Account* theAccount, const char* filePath);
+	DeleteAccountResult DeleteAccount(Account* account);
 	void ExitAccount(Account* account);
 private:
 	Admin() : m_AccountsCount(0), m_FilePath("../Data/") {}
