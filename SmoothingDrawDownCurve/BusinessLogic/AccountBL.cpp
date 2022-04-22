@@ -16,14 +16,12 @@ float calculateAverage(std::list<Equity*>& values, size_t periodsNumber)
 	float average = (float)sum / periodsNumber;
 	return average;
 }
-
 int _calculateEquity(std::list<Equity*>& values, R* r)
 {
 	int lastEquity = (values.back()--)->equity;
 	int newEquity = lastEquity + r->value;
 	return newEquity;
 }
-
 bool isGhostMode(int lastEquity, float lastAverage)
 {
 	return lastEquity < lastAverage;
@@ -50,12 +48,35 @@ CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std
 	}
 	return result;
 }
-void deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
+DeleteAccountResult deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
-	accountCollection.remove(theAccount);
-	updateAccountList(accountCollection, filePath);
-	decreaseAccountsCreatedNumber(filePath);
-	count = getAccountsCreatedNumber(filePath);
+	DeleteAccountResult result;
+
+	try {
+		accountCollection.remove(theAccount);
+		bool wasUpdated = updateAccountList(accountCollection, filePath);
+		if (wasUpdated) {
+			bool wasDecresed = decreaseAccountsCreatedNumber(filePath);
+			if (wasDecresed) {
+				result.wasDeleted = true;
+				result.errorMessage = "The account was deleted correctly";
+			}
+			else {
+				result.wasDeleted = false;
+				result.errorMessage = "Accounts created number could not be decreased";
+			}
+		}
+		else {
+			result.wasDeleted = false;
+			result.errorMessage = "The account could not be deleted";
+		}
+		count = getAccountsCreatedNumber(filePath);
+	}
+	catch (std::exception& ex) {
+		result.wasDeleted = false;
+		result.errorMessage = ex.what();
+	}
+	return result;
 }
 
 std::list<Account*> getAccountsBL(const char* filePath)
@@ -97,15 +118,33 @@ size_t getAccountsCountBL(const char* filePath)
 	return getAccountsCreatedNumber(filePath);
 }
 
-void updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection)
+UpdateAccountResult updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection)
 {
-	auto it = accountCollection.begin();
-	while (it != accountCollection.end()) {
-		if ((*it)->Id() == theAccount->Id()) {
-			(*it)->SetName(theAccount->Name());
-			break;
+	UpdateAccountResult result;
+
+	try {
+		auto it = accountCollection.begin();
+		while (it != accountCollection.end()) {
+			if ((*it)->Id() == theAccount->Id()) {
+				(*it)->SetName(theAccount->Name());
+				break;
+			}
+			it++;
 		}
-		it++;
+		bool wasUpdated = updateAccountList(accountCollection, filePath);
+		if (wasUpdated) {
+			result.wasUpdated = true;
+			result.errorMessage = "The account was updated correctly";
+		}
+		else {
+			result.wasUpdated = false;
+			result.errorMessage = "The account could not be updated";
+		}
 	}
-	updateAccountList(accountCollection, filePath);
+	catch (std::exception& ex) {
+		result.wasUpdated = false;
+		result.errorMessage = "The account could not be updated";
+	}	
+
+	return result;
 }
