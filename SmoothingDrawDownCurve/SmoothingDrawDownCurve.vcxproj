@@ -181,6 +181,9 @@
     <ClInclude Include="Domain\Models\Structures\Average.h" />
     <ClInclude Include="Domain\Models\Structures\Equity.h" />
     <ClInclude Include="Domain\Models\Structures\R.h" />
+    <ClInclude Include="Domain\Models\ValidationModels\CreateAccountResult.h" />
+    <ClInclude Include="Domain\Models\ValidationModels\DeleteAccountResult.h" />
+    <ClInclude Include="Domain\Models\ValidationModels\UpdateAccountResult.h" />
     <ClInclude Include="Vendor\imgui\imconfig.h" />
     <ClInclude Include="Vendor\imgui\imgui.h" />
     <ClInclude Include="Vendor\imgui\imgui_impl_glfw.h" />

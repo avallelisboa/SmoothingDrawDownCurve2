@@ -140,6 +140,15 @@
     <ClInclude Include="DAOs\AverageDAO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Domain\Models\ValidationModels\CreateAccountResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Models\ValidationModels\UpdateAccountResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Domain\Models\ValidationModels\DeleteAccountResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Vendor\libs\glfw3.lib" />
