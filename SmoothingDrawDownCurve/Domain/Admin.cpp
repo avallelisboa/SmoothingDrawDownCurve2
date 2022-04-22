@@ -22,9 +22,9 @@ void Admin::AddR(Account* theAccount, int r)
 
 	addRBL(m_FilePath, theAccount, theDataToAdd);
 }
-void Admin::MakeAccount(char name[20]) {
+CreateAccountResult Admin::MakeAccount(char name[20]) {
 	Account* aAccount = new Account(m_AccountsCount, name);
-	makeAccountBL(m_FilePath, aAccount, m_Accounts, m_AccountsCount);
+	return makeAccountBL(m_FilePath, aAccount, m_Accounts, m_AccountsCount);
 }
 void Admin::DeleteAccount(Account* account)
 {

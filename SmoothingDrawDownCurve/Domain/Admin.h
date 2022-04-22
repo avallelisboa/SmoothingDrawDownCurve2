@@ -3,6 +3,7 @@
 #include <vector>
 #include "../BusinessLogic/AccountBL.h"
 #include "../DAOs/AccountDAO.h"
+#include "Models/ValidationModels/CreateAccountResult.h"
 
 class Admin
 {
@@ -19,7 +20,7 @@ public:
 	inline const std::list<Account*> GetAccounts() const { return m_Accounts; }
 	inline const std::size_t GetAccountsCount() const { return m_AccountsCount; }
 	void AddR(Account* theAccount, int r);
-	void MakeAccount(char name[20]);
+	CreateAccountResult MakeAccount(char name[20]);
 	void DeleteAccount(Account* account);
 	void ExitAccount(Account* account);
 private:

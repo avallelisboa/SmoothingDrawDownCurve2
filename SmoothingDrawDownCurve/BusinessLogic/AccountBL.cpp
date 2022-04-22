@@ -1,6 +1,5 @@
 #include "AccountBL.h"
 
-
 float calculateAverage(std::list<Equity*>& values, size_t periodsNumber)
 {
 	if(values.size() == 0 || values.size() < periodsNumber)
@@ -30,14 +29,27 @@ bool isGhostMode(int lastEquity, float lastAverage)
 	return lastEquity < lastAverage;
 }
 
-void makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
+CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
-	accountCollection.push_back(theAccount);
-	saveAccount(theAccount, filePath);
-	increaseAccountsCreatedNumber(filePath);
-	count = getAccountsCreatedNumber(filePath);
+	CreateAccountResult result;
+	try {
+		count = getAccountsCreatedNumber(filePath);
+		if (count < 10) {
+			accountCollection.push_back(theAccount);		
+			bool wasSaved = saveAccount(theAccount, filePath);
+			increaseAccountsCreatedNumber(filePath);
+		}
+		else {
+			result.wasCreated = false;
+			result.errorMessage = "You can only have ten accounts created.";
+		}
+	}
+	catch (std::exception& ex) {
+		result.wasCreated = false;
+		result.errorMessage = ex.what();
+	}
+	return result;
 }
-
 void deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	accountCollection.remove(theAccount);
