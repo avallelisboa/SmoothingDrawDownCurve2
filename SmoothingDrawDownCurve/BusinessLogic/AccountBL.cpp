@@ -22,10 +22,6 @@ int _calculateEquity(std::list<Equity*>& values, R* r)
 	int newEquity = lastEquity + r->value;
 	return newEquity;
 }
-bool isGhostMode(int lastEquity, float lastAverage)
-{
-	return lastEquity < lastAverage;
-}
 
 CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
@@ -33,9 +29,17 @@ CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std
 	try {
 		count = getAccountsCreatedNumber(filePath);
 		if (count < 10) {
-			accountCollection.push_back(theAccount);		
 			bool wasSaved = saveAccount(theAccount, filePath);
-			increaseAccountsCreatedNumber(filePath);
+			if (wasSaved){
+				bool wasIncreased = increaseAccountsCreatedNumber(filePath);
+				if (wasIncreased)
+					accountCollection.push_back(theAccount);
+				else throw std::exception("accounts created count could not be increased");
+			}
+			else {
+				result.wasCreated = false;
+				result.errorMessage = "The account could not be saved";
+			}
 		}
 		else {
 			result.wasCreated = false;
@@ -79,38 +83,60 @@ DeleteAccountResult deleteAccountBL(const char* filePath, Account* theAccount, s
 	return result;
 }
 
-std::list<Account*> getAccountsBL(const char* filePath)
+GetAccountsResult getAccountsBL(const char* filePath)
 {
-	std::list<Account*> accounts = getAccounts(filePath);
-	auto it = accounts.begin();
-	while (it != accounts.end()) {
-		auto rs = getRs(*it, filePath);
-		auto eqs = getEquities(*it, filePath);
-		auto ma = getMovingAverage(*it, filePath);
-		(*it)->LoadData(rs, eqs, ma);
+	GetAccountsResult result;
+
+	try {
+		result.accounts = getAccounts(filePath);
+	
+		auto it = result.accounts.begin();
+		while (it != result.accounts.end()) {
+			auto rs = getRs(*it, filePath);
+			auto eqs = getEquities(*it, filePath);
+			auto ma = getMovingAverage(*it, filePath);
+			(*it)->LoadData(rs, eqs, ma);
+		}
+	}
+	catch (std::exception& ex) {
+		result.wasReadFromFile = false;
+		result.errorMessage = ex.what();
 	}
 
-	return accounts;
+	return result;
 }
 
-void addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData)
+AddRResult addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData)
 {
+	AddRResult result;
+
 	auto eqsList = theAccount->GetEquitiesList();
 	int equity = _calculateEquity(eqsList, theData.r);
 	float average = calculateAverage(eqsList, 14);
-	theData.r->index = getRsCreatedNumber(theAccount, filePath);
-	theData.equity->equity = equity;
-	theData.equity->index = getEquitiesCreatedNumber(theAccount, filePath);
-	theData.average->average = average;
-	theData.average->index = getAveragesCreatedNumber(theAccount, filePath);
-	theAccount->AddData(theData);
+	try {
+		theData.r->index = getRsCreatedNumber(theAccount, filePath);
+		theData.equity->equity = equity;
+		theData.equity->index = getEquitiesCreatedNumber(theAccount, filePath);
+		theData.average->average = average;
+		theData.average->index = getAveragesCreatedNumber(theAccount, filePath);
+		theAccount->AddData(theData);
 
-	saveR(theAccount, theData.r, filePath);
-	increaseRsCreatedNumber(theAccount, filePath);
-	saveEquity(theAccount, theData.equity, filePath);
-	increaseEquityCreatedNumber(theAccount, filePath);
-	saveAverage(theAccount, theData.average, filePath);
-	increaseAverageCreatedNumber(theAccount, filePath);
+		saveR(theAccount, theData.r, filePath);
+		increaseRsCreatedNumber(theAccount, filePath);
+		saveEquity(theAccount, theData.equity, filePath);
+		increaseEquityCreatedNumber(theAccount, filePath);
+		saveAverage(theAccount, theData.average, filePath);
+		increaseAverageCreatedNumber(theAccount, filePath);
+
+		result.wasAdded = true;
+		result.errorMessage = "The add was added correctly";
+	}
+	catch (std::exception& ex) {
+		result.wasAdded = false;
+		result.errorMessage = "There was an error at trying to add the R";
+	}
+
+	return result;
 }
 
 size_t getAccountsCountBL(const char* filePath)

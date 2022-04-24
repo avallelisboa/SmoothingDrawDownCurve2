@@ -3,7 +3,9 @@
 bool saveEquity(Account* theAccount, Equity* eq, const char* filePath){
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_equities.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
@@ -29,7 +31,9 @@ std::list<Equity*> getEquities(Account* theAccount, const char* filePath) {
 
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_equities.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
@@ -54,7 +58,9 @@ std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_
 
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_equities.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
@@ -83,7 +89,9 @@ std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_
 int getEquitiesCreatedNumber(Account* theAccount, const char* filePath) {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_equitiesNumber.bin";
-	char* fullName = (char*)alloca(sizeof(filePath)+sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
@@ -103,7 +111,9 @@ bool increaseEquityCreatedNumber(Account* theAccount, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_equitiesNumber.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 

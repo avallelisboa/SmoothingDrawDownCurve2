@@ -2,17 +2,22 @@
 
 Admin Admin::s_Instance;
 
-void Admin::Init() {
-	_loadData();
+bool Admin::Init() {
+	return _loadData();
 }
-void Admin::_loadData() {
-	m_Accounts = getAccountsBL(m_FilePath);
-	m_AccountsCount = getAccountsCountBL(m_FilePath);
+bool Admin::_loadData() {
+	GetAccountsResult result = getAccountsBL(m_FilePath);
+	if (result.wasReadFromFile) {
+		m_Accounts = result.accounts;
+		m_AccountsCount = getAccountsCountBL(m_FilePath);
+
+		return true;
+	}
+	else {
+		return false;
+	}
 }
-void Admin::OpenAccount(Account* theAccount) {
-	m_OpenAccounts.push_back(theAccount);
-}
-void Admin::AddR(Account* theAccount, int r)
+AddRResult Admin::AddR(Account* theAccount, int r)
 {
 	AccountDataToAdd theDataToAdd;
 	theDataToAdd.r = new R();
@@ -20,7 +25,9 @@ void Admin::AddR(Account* theAccount, int r)
 	theDataToAdd.equity = new Equity();
 	theDataToAdd.average = new Average();
 
-	addRBL(m_FilePath, theAccount, theDataToAdd);
+	AddRResult result = addRBL(m_FilePath, theAccount, theDataToAdd);
+
+	return result;
 }
 CreateAccountResult Admin::MakeAccount(char name[20]) {
 	Account* aAccount = new Account(m_AccountsCount, name);
@@ -34,9 +41,6 @@ DeleteAccountResult Admin::DeleteAccount(Account* account)
 {
 	return deleteAccountBL(m_FilePath, account, m_Accounts, m_AccountsCount);
 }
-void Admin::ExitAccount(Account* account) {
-	m_OpenAccounts.remove(account);
-}
 Admin::~Admin()
 {
 	_cleanUp();
@@ -44,11 +48,18 @@ Admin::~Admin()
 
 void Admin::_cleanUp()
 {
+	_cleanUpAccounts();	
+}
+
+void Admin::_cleanUpAccounts()
+{
 	auto it = m_Accounts.begin();
 	while (it != m_Accounts.end()) {
 		_cleanRs(*it);
 		_cleanEquities(*it);
 		_cleanAverages(*it);
+		delete(*it);
+		it++;
 	}
 }
 

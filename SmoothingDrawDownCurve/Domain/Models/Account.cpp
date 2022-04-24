@@ -22,3 +22,9 @@ void Account::AddData(AccountDataToAdd& theDataToAdd)
 	m_Equities.push_back(theDataToAdd.equity);
 	m_MovingAverage.push_back(theDataToAdd.average);
 }
+bool Account::IsGhostMode()
+{
+	int lastEquity = (*(m_Equities.end()--))->equity;
+	float lastAverage = (*(m_MovingAverage.end()--))->average;
+	return lastEquity < lastAverage;
+}

@@ -28,4 +28,5 @@ public:
 	inline const std::list<Average*>& GetMovingAverage() const { return m_MovingAverage; }
 
 	void AddData(AccountDataToAdd& theDataToAdd);
+	bool IsGhostMode();
 };

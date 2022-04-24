@@ -4,7 +4,9 @@ bool saveR(Account* theAccount, R* r, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_rs.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(fileName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
@@ -33,7 +35,9 @@ std::list<R*> getRs(Account* theAccount, const char* filePath)
 
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_rs.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
@@ -60,7 +64,9 @@ std::list<R*> getNRs(Account* theAccount, size_t startingIndex, size_t endingInd
 
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_rs.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
@@ -91,7 +97,9 @@ int getRsCreatedNumber(Account* theAccount, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_rsNumber.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
@@ -112,7 +120,9 @@ bool increaseRsCreatedNumber(Account* theAccount, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_rsNumber.bin";
-	char* fullName = (char*)alloca(sizeof(filePath) + sizeof(accountName) + sizeof(fileName));
+	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	char* fullName = (char*)alloca(totalsize);
+	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 

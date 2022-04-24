@@ -3,6 +3,7 @@
 AccountFile makeAccountFile(Account* theAccount) {
 	AccountFile aAccountFile;
 	aAccountFile.index = theAccount->Id();
+	memset(aAccountFile.name, 0, 20);
 	strcat(aAccountFile.name, theAccount->Name());
 
 	return aAccountFile;
