@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BusinessLogic\AccountBL.cpp" />
+    <ClCompile Include="BusinessLogic\Plotting.cpp" />
     <ClCompile Include="DAOs\AccountDAO.cpp" />
     <ClCompile Include="DAOs\AverageDAO.cpp" />
     <ClCompile Include="DAOs\EquityDAO.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="DAOs\RDAO.cpp" />
     <ClCompile Include="Domain\Models\Account.cpp" />
     <ClCompile Include="Domain\Admin.cpp" />
+    <ClCompile Include="Domain\GUIAdmin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Vendor\imgui\imgui.cpp" />
     <ClCompile Include="Vendor\imgui\imgui_demo.cpp" />
@@ -166,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BusinessLogic\AccountBL.h" />
+    <ClInclude Include="BusinessLogic\Plotting.h" />
     <ClInclude Include="DAOs\AccountDAO.h" />
     <ClInclude Include="DAOs\AverageDAO.h" />
     <ClInclude Include="DAOs\EquityDAO.h" />
@@ -178,12 +181,17 @@
     <ClInclude Include="Domain\Admin.h" />
     <ClInclude Include="Domain\Models\Structures\AccountDataToAdd.h" />
     <ClInclude Include="DAOs\FileObjects\AccountFile.h" />
+    <ClInclude Include="Domain\Models\Structures\AccountRef.h" />
     <ClInclude Include="Domain\Models\Structures\Average.h" />
     <ClInclude Include="Domain\Models\Structures\Equity.h" />
     <ClInclude Include="Domain\Models\Structures\R.h" />
+    <ClInclude Include="Domain\Models\ValidationModels\AddRResult.h" />
     <ClInclude Include="Domain\Models\ValidationModels\CreateAccountResult.h" />
     <ClInclude Include="Domain\Models\ValidationModels\DeleteAccountResult.h" />
+    <ClInclude Include="Domain\Models\ValidationModels\GetAccountsResult.h" />
     <ClInclude Include="Domain\Models\ValidationModels\UpdateAccountResult.h" />
+    <ClInclude Include="Domain\GUIAdmin.h" />
+    <ClInclude Include="setupDearIMGui.h" />
     <ClInclude Include="Vendor\imgui\imconfig.h" />
     <ClInclude Include="Vendor\imgui\imgui.h" />
     <ClInclude Include="Vendor\imgui\imgui_impl_glfw.h" />
