@@ -35,7 +35,7 @@ private:
 	static Admin s_Instance;
 	size_t m_AccountsCount;
 	std::list<Account*> m_Accounts;
-	//Free memory
+	//Release memory
 	void _cleanUp();
 	void _cleanUpAccounts();
 	void _cleanRs(Account* theAccount);
