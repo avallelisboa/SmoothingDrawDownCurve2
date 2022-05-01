@@ -4,7 +4,7 @@ bool saveAverage(Account* theAccount, Average* av, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_averages.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
@@ -93,7 +93,7 @@ int getAveragesCreatedNumber(Account* theAccount, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_averagesNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
@@ -115,10 +115,11 @@ int getAveragesCreatedNumber(Account* theAccount, const char* filePath)
 bool increaseAverageCreatedNumber(Account* theAccount, const char* filePath) {
 	const char* accountName = theAccount->Name();
 	const char* fileName = "_averagesNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
+	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
+	strcat(fullName, accountName);
 	strcat(fullName, fileName);
 
 	size_t averagesCreatedNumber = 0;
