@@ -6,4 +6,5 @@ struct AccountRef {
     bool isOpen;
     bool isAddingR;
     bool isPlotting;
+    int rToAdd;
 };

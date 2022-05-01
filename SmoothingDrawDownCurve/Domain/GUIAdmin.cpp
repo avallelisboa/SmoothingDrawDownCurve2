@@ -27,7 +27,6 @@ void GUIAdmin::_makeAccountsReferences()
         ImGui::Text((*accountIt)->Name());
         ImGui::Checkbox("is open?", &(m_accountsReferences[count]->isOpen));
 
-
         accountIt++;
         count++;
     }
@@ -69,10 +68,10 @@ void GUIAdmin::addOperation(AccountRef& theAccount, bool* p_open)
 {
     ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar;
     ImGui::Begin("Add operation result", p_open, flags);
-    int r = 0;
-    ImGui::InputInt("Enter the operation result in r", &r);
+    ImGui::InputInt("Enter the operation result in r", &(theAccount.rToAdd));
     if (ImGui::Button("Add")) {
-        Admin::Get().AddR(theAccount.accountPt, r);
+        Admin::Get().AddR(theAccount.accountPt, theAccount.rToAdd);
+        theAccount.rToAdd = 0;
         *p_open = false;
     }
     ImGui::End();
@@ -112,7 +111,7 @@ void GUIAdmin::showOpenAccountWindow(AccountRef& theAccount, bool* p_open)
 
     ImGui::Begin(fullname, p_open, flags);
     auto aAccount = theAccount.accountPt;
-    if (aAccount->GetEquitiesList().size() > 14) {
+    if (aAccount->IsThereEnoughData()) {
         if (aAccount->IsGhostMode())
             ImGui::Text("Ghost Mode");
         else
@@ -125,7 +124,7 @@ void GUIAdmin::showOpenAccountWindow(AccountRef& theAccount, bool* p_open)
         theAccount.isAddingR = true;
         addOperation(theAccount, &(theAccount.isAddingR));
     }
-    if (ImGui::Button("Graphic data")) {
+    if (ImGui::Button("Graphic data") && theAccount.accountPt->IsThereEnoughData()) {
         graphicData(theAccount, &(theAccount.isPlotting));
         theAccount.isPlotting = true;
     }

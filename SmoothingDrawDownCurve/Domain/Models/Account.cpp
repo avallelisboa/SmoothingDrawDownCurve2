@@ -1,5 +1,9 @@
 #include "Account.h"
 
+Account::Account()
+{
+}
+
 Account::Account(int index, char* name) : m_Index(index) {
 	strcat(m_Name, name);
 }
@@ -22,9 +26,13 @@ void Account::AddData(AccountDataToAdd& theDataToAdd)
 	m_Equities.push_back(theDataToAdd.equity);
 	m_MovingAverage.push_back(theDataToAdd.average);
 }
+bool Account::_isGhostMode(int lastEquity, float lastAverage)
+{
+	return lastEquity < lastAverage;
+}
 bool Account::IsGhostMode()
 {
-	int lastEquity = (*(m_Equities.end()--))->equity;
-	float lastAverage = (*(m_MovingAverage.end()--))->average;
-	return lastEquity < lastAverage;
+	int lastEquity = m_Equities.back()->equity;
+	float lastAverage = m_MovingAverage.back()->average;
+	return _isGhostMode(lastEquity, lastAverage);
 }

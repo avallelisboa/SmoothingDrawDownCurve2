@@ -16,6 +16,7 @@ private:
 	std::list<R*> m_Rs;
 	std::list<Equity*> m_Equities;
 	std::list<Average*> m_MovingAverage;
+	bool _isGhostMode(int lastEquity, float lastAverage);
 public:
 	Account();
 	Account(int index, char* name);
@@ -26,6 +27,8 @@ public:
 	inline const std::list<R*>& GetRsList() const { return m_Rs; }
 	inline const std::list<Equity*>& GetEquitiesList() const { return m_Equities; }
 	inline const std::list<Average*>& GetMovingAverage() const { return m_MovingAverage; }
+
+	inline bool IsThereEnoughData() { return m_Equities.size() >= 14; }
 
 	void AddData(AccountDataToAdd& theDataToAdd);
 	bool IsGhostMode();
