@@ -16,6 +16,7 @@
 #include <exception>
 
 float calculateAverage(std::list<Equity*>& values, size_t periodsNumber);
+int calculateEquity(std::list<Equity*>& values, R* r);
 CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
 AddRResult addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData);
 size_t getAccountsCountBL(const char* filePath);

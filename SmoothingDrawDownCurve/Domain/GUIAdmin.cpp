@@ -24,16 +24,15 @@ void GUIAdmin::_makeAccountsReferences()
 
         m_accountsReferences.push_back(accRef);
 
-        ImGui::Text((*accountIt)->Name());
-        ImGui::Checkbox("is open?", &(m_accountsReferences[count]->isOpen));
-
         accountIt++;
         count++;
     }
 }
 void GUIAdmin::_loadData()
 {
-    m_accounts = Admin::Get().GetAccounts();
+    auto& theAdmin = Admin::Get();
+    theAdmin.LoadData();
+    m_accounts = theAdmin.GetAccounts();
     _makeAccountsReferences();
 }
 void GUIAdmin::createAccount()
@@ -57,7 +56,6 @@ void GUIAdmin::showCreateAccountWindow()
     if (ImGui::Button("Create Account")) {
         createAccount();
         m_mustShowCreateAccountWindow = false;
-        _loadData();
     }
     if (ImGui::Button("Close"))
         m_mustShowCreateAccountWindow = false;
@@ -172,7 +170,6 @@ void GUIAdmin::cleanUp()
 }
 void GUIAdmin::initApp()
 {
-    Admin::Get().Init();
     _loadData();
 }
 void GUIAdmin::showOpenAccountsWindows()

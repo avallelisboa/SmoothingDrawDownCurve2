@@ -2,10 +2,8 @@
 
 Admin Admin::s_Instance;
 
-bool Admin::Init() {
-	return _loadData();
-}
-bool Admin::_loadData() {
+
+bool Admin::LoadData() {
 	GetAccountsResult result = getAccountsBL(m_FilePath);
 	if (result.wasReadFromFile) {
 		m_Accounts = result.accounts;

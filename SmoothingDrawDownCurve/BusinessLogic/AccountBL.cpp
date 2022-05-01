@@ -16,9 +16,9 @@ float calculateAverage(std::list<Equity*>& values, size_t periodsNumber)
 	float average = (float)sum / periodsNumber;
 	return average;
 }
-int _calculateEquity(std::list<Equity*>& values, R* r)
+int calculateEquity(std::list<Equity*>& values, R* r)
 {
-	int lastEquity = (values.back()--)->equity;
+	int lastEquity = values.back()->equity;
 	int newEquity = lastEquity + r->value;
 	return newEquity;
 }
@@ -96,6 +96,7 @@ GetAccountsResult getAccountsBL(const char* filePath)
 			auto eqs = getEquities(*it, filePath);
 			auto ma = getMovingAverage(*it, filePath);
 			(*it)->LoadData(rs, eqs, ma);
+			it++;
 		}
 	}
 	catch (std::exception& ex) {
@@ -111,7 +112,7 @@ AddRResult addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& t
 	AddRResult result;
 
 	auto eqsList = theAccount->GetEquitiesList();
-	int equity = _calculateEquity(eqsList, theData.r);
+	int equity = calculateEquity(eqsList, theData.r);
 	float average = calculateAverage(eqsList, 14);
 	try {
 		theData.r->index = getRsCreatedNumber(theAccount, filePath);

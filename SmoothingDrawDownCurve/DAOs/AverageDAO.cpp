@@ -125,14 +125,15 @@ bool increaseAverageCreatedNumber(Account* theAccount, const char* filePath) {
 	size_t averagesCreatedNumber = 0;
 
 	std::fstream file;
-	file.open(fullName, std::ios::binary);
-	if (file.is_open()) {
-		file.read((char*)&averagesCreatedNumber, sizeof(size_t));
-		averagesCreatedNumber++;
-		file.clear();
-		file.write((char*)&averagesCreatedNumber, sizeof(size_t));
-		file.close();
-	} else return false;
+	file.open(fullName, std::ios::binary | std::ios::in);
+	file.read((char*)&averagesCreatedNumber, sizeof(size_t));
+	averagesCreatedNumber++;
+	file.close();
+
+	file.open(fullName, std::ios::binary | std::ios::out);
+	file.clear();
+	file.write((char*)&averagesCreatedNumber, sizeof(size_t));
+	file.close();
 
 	return true;
 }
