@@ -28,11 +28,13 @@ void GUIAdmin::_makeAccountsReferences()
         count++;
     }
 }
+void GUIAdmin::_updateAccountsList() {
+    m_accounts = Admin::Get().GetAccounts();
+}
 void GUIAdmin::_loadData()
 {
-    auto& theAdmin = Admin::Get();
-    theAdmin.LoadData();
-    m_accounts = theAdmin.GetAccounts();
+    Admin::Get().LoadData();
+    _updateAccountsList();
     _makeAccountsReferences();
 }
 void GUIAdmin::createAccount()
@@ -40,7 +42,8 @@ void GUIAdmin::createAccount()
     auto result = Admin::Get().MakeAccount(m_accountToCreateName);
     m_wasError = !(result.wasCreated);
     m_errorMessage = result.errorMessage;
-    _loadData();
+    _updateAccountsList();
+    _makeAccountsReferences();
 }
 void GUIAdmin::showCreateAccountWindow()
 {

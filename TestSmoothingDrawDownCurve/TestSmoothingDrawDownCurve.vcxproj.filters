@@ -24,9 +24,18 @@
     <ClCompile Include="TestMockUpData\TestAverageCalculationMockUpData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestEquityCalculation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMockUpData\TestEquityCalculationMockUpData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestMockUpData\TestAverageCalculationMockUpData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMockUpData\TestEquityCalculationMockUpData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

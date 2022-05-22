@@ -15,9 +15,8 @@ TestAverageCalculationMockUpData::~TestAverageCalculationMockUpData()
 void TestAverageCalculationMockUpData::_cleanUp()
 {
 
-	auto oneElementListIt = m_OneElementList.begin();
-	delete (*oneElementListIt);
-	oneElementListIt++;
+	auto oneElementListIt = m_OneElementList.front();
+	delete oneElementListIt;
 
 	auto numberOfElementsEqualsToPeriodsNumberListIt = m_NumberOfElementsEqualsToPeriodsNumberList.begin();
 	while (numberOfElementsEqualsToPeriodsNumberListIt != m_NumberOfElementsEqualsToPeriodsNumberList.end()) {

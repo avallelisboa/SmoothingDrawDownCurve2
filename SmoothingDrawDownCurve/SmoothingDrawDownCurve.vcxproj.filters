@@ -45,22 +45,22 @@
     <ClCompile Include="Domain\Models\Account.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DAOs\AccountDAO.cpp">
+    <ClCompile Include="DAOs\Implementation\AccountDAO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BusinessLogic\AccountBL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DAOs\RDAO.cpp">
+    <ClCompile Include="DAOs\Implementation\RDAO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DAOs\EquityDAO.cpp">
+    <ClCompile Include="DAOs\Implementation\EquityDAO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DAOs\AverageDAO.cpp">
+    <ClCompile Include="DAOs\Implementation\AverageDAO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DAOs\Parsing\Parser.cpp">
+    <ClCompile Include="DAOs\Utilities\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Domain\GUIAdmin.cpp">
@@ -104,19 +104,13 @@
     <ClInclude Include="Domain\Models\Account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DAOs\AccountDAO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BusinessLogic\AccountBL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Domain\Models\Structures\AccountDataToAdd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DAOs\FileObjects\AccountFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DAOs\Parsing\Parser.h">
+    <ClInclude Include="DAOs\Utilities\Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DAOs\FileObjects\RFile.h">
@@ -135,15 +129,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Domain\Models\Structures\Average.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DAOs\RDAO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DAOs\EquityDAO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DAOs\AverageDAO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Domain\Models\ValidationModels\CreateAccountResult.h">
@@ -171,6 +156,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="setupDearIMGui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\Headers\AccountDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\Headers\AverageDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\Headers\EquityDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\Headers\RDAO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

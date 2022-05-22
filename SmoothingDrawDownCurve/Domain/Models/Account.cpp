@@ -19,12 +19,17 @@ void Account::LoadData(std::list<R*>& rs, std::list<Equity*>& eqs, std::list<Ave
 	m_Equities = eqs;
 	m_MovingAverage = ma;
 }
-
-void Account::AddData(AccountDataToAdd& theDataToAdd)
+void Account::AddR(R* theR)
 {
-	m_Rs.push_back(theDataToAdd.r);
-	m_Equities.push_back(theDataToAdd.equity);
-	m_MovingAverage.push_back(theDataToAdd.average);
+	m_Rs.push_back(theR);
+}
+void Account::AddEquity(Equity* theEquity)
+{
+	m_Equities.push_back(theEquity);
+}
+void Account::AddAverage(Average* theAverage)
+{
+	m_MovingAverage.push_back(theAverage);
 }
 bool Account::_isGhostMode(int lastEquity, float lastAverage)
 {

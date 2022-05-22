@@ -1,8 +1,9 @@
 #pragma once
 
 #include <fstream>
-#include "Parsing/Parser.h"
-#include "../Domain/Models/Structures/Average.h"
+#include "../Utilities/Parser.h"
+#include "../../Domain/Models/Structures/Average.h"
+
 
 bool saveAverage(Account* theAccount, Average* av, const char* filePath);
 std::list<Average*> getMovingAverage(Account* theAccount, const char* filePath);

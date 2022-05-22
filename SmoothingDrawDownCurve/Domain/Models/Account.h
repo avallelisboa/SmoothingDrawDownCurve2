@@ -3,7 +3,6 @@
 
 #include <cstring>
 #include <list>
-#include "Structures/AccountDataToAdd.h"
 #include "Structures/Average.h"
 #include "Structures/Equity.h"
 #include "Structures/R.h"
@@ -30,6 +29,8 @@ public:
 
 	inline bool IsThereEnoughData() { return m_Equities.size() >= 14; }
 
-	void AddData(AccountDataToAdd& theDataToAdd);
+	void AddR(R* theR);
+	void AddEquity(Equity* theEquity);
+	void AddAverage(Average* theAverage);
 	bool IsGhostMode();
 };

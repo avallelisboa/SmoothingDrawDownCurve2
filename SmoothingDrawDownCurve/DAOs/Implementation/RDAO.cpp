@@ -1,8 +1,9 @@
-#include"EquityDAO.h"
+#include"../Headers/RDAO.h"
 
-bool saveEquity(Account* theAccount, Equity* eq, const char* filePath){
+bool saveR(Account* theAccount, R* r, const char* filePath)
+{
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equities.bin";
+	const char* fileName = "_rs.bin";
 	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
@@ -10,85 +11,90 @@ bool saveEquity(Account* theAccount, Equity* eq, const char* filePath){
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
-		int index = eq->index;
-		int equity = eq->equity;
-		EquityFile aEquityFile = makeEquityFile(theAccount->Id(), index, equity);
+		int rIndex = r->index;
+		int value = r->value;
+		RFile af = makeRFile(theAccount->Id(), rIndex, value);
 
+		//Goes to the end of the file
 		file.seekp(0, std::ios_base::end);
-		file.write((char*)&aEquityFile, sizeof(EquityFile));
+		file.write((char*)&af, sizeof(RFile));
 		file.close();
 	}
 	else return false;
 
 	return true;
 }
-std::list<Equity*> getEquities(Account* theAccount, const char* filePath) {
-	std::list<Equity*> equities;
+
+std::list<R*> getRs(Account* theAccount, const char* filePath)
+{
+	std::list<R*> rs;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equities.bin";
+	const char* fileName = "_rs.bin";
 	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
-		while (!file.eof()) {
-			EquityFile aEquityFile;
-			file.read((char*)&aEquityFile, sizeof(EquityFile));
-
-			Equity* aEquity = makeEquity(&aEquityFile);
-			equities.push_back(aEquity);
+		RFile aRFile;
+		while (file.read((char*)&aRFile, sizeof(RFile))) {
+			R* ar = makeR(&aRFile);
+			rs.push_back(ar);
 		}
 		file.close();
 	}
 
-	return equities;
+	return rs;
 }
-std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_t endingIndex, const char* filePath) {
-	std::list<Equity*> equities;
+
+std::list<R*> getNRs(Account* theAccount, size_t startingIndex, size_t endingIndex, const char* filePath)
+{
+	std::list<R*> rs;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equities.bin";
+	const char* fileName = "_rs.bin";
 	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
 	strcat(fullName, filePath);
+	strcat(fullName, accountName);
 	strcat(fullName, fileName);
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
 		size_t count = startingIndex;
 		//Skips the registers we do not want to return
-		file.seekg(startingIndex * sizeof(EquityFile), std::ios_base::beg);
+		file.seekg(startingIndex * sizeof(RFile), std::ios_base::beg);
 
 		while (!file.eof() && count <= endingIndex) {
-			EquityFile aEquityFile;
-			file.read((char*)&aEquityFile, sizeof(EquityFile));
+			RFile aRFile;
+			file.read((char*)&aRFile, sizeof(RFile));
 
-			Equity* aEquity = makeEquity(&aEquityFile);
-			equities.push_back(aEquity);
+			R* ar = makeR(&aRFile);
+			rs.push_back(ar);
 
 			count++;
 		}
 		file.close();
 	}
 
-	return equities;
+	return rs;
 }
-int getEquitiesCreatedNumber(Account* theAccount, const char* filePath) {
+int getRsCreatedNumber(Account* theAccount, const char* filePath)
+{
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equitiesNumber.bin";
+	const char* fileName = "_rsNumber.bin";
 	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
@@ -96,22 +102,22 @@ int getEquitiesCreatedNumber(Account* theAccount, const char* filePath) {
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
 
-	int equitiesNumber = 0;
+	int rsNumber = 0;
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
-		file.read((char*)&equitiesNumber, sizeof(int));
+		file.read((char*)&rsNumber, sizeof(int));
 		file.close();
 	}else return -1;
 
-	return equitiesNumber;
+	return rsNumber;
 }
-bool increaseEquityCreatedNumber(Account* theAccount, const char* filePath)
+bool increaseRsCreatedNumber(Account* theAccount, const char* filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equitiesNumber.bin";
+	const char* fileName = "_rsNumber.bin";
 	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
 	char* fullName = (char*)alloca(totalsize);
 	memset(fullName, 0, totalsize);
@@ -119,17 +125,17 @@ bool increaseEquityCreatedNumber(Account* theAccount, const char* filePath)
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
 
-	size_t equitiesCreatedNumber = 0;
+	size_t rsCreatedNumber = 0;
 
 	std::fstream file;
 	file.open(fullName, std::ios::binary | std::ios::in);
-	file.read((char*)&equitiesCreatedNumber, sizeof(size_t));
-	equitiesCreatedNumber++;
+	file.read((char*)&rsCreatedNumber, sizeof(size_t));
+	rsCreatedNumber++;
 	file.close();
 
 	file.open(fullName, std::ios::binary | std::ios::out);
 	file.clear();
-	file.write((char*)&equitiesCreatedNumber, sizeof(size_t));
+	file.write((char*)&rsCreatedNumber, sizeof(size_t));
 	file.close();
 
 	return true;

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <fstream>
-#include "Parsing/Parser.h"
-#include "../Domain/Models/Structures/Equity.h"
+#include "../Utilities/Parser.h"
+#include "../../Domain/Models/Structures/Equity.h"
 
 bool saveEquity(Account* theAccount, Equity* eq, const char* filePath);
 std::list<Equity*> getEquities(Account* theAccount, const char* filePath);

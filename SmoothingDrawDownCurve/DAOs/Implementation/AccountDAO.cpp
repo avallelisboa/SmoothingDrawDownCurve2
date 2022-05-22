@@ -1,4 +1,4 @@
-#include "AccountDAO.h"
+#include "../Headers/AccountDAO.h"
 
 bool saveAccount(Account* theAccount, const char* filePath)
 {
@@ -11,9 +11,9 @@ bool saveAccount(Account* theAccount, const char* filePath)
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
-	file.open(fullName, std::ios::binary);
-
+	std::fstream file;
+	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
+	
 	if (file.is_open()) {
 		AccountFile af = makeAccountFile(theAccount);
 
@@ -33,9 +33,9 @@ bool updateAccountList(std::list<Account*>& theAccountList, const char* filePath
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
+	std::fstream file;
 	remove(fullName);
-	file.open(fullName, std::ios::binary);
+	file.open(fullName, std::ios::out | std::ios::binary);
 	if (file.is_open()) {
 		auto it = theAccountList.begin();
 		while (it != theAccountList.end()) {
@@ -60,14 +60,12 @@ std::list<Account*> getAccounts(const char* filePath)
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::in);
 
 	if (file.is_open()) {
-		while (!file.eof()) {
-			AccountFile aAccountFile;
-			file.read((char*)&aAccountFile, sizeof(AccountFile));
-
+		AccountFile aAccountFile;
+		while (file.read((char*)&aAccountFile, sizeof(AccountFile))) {
 			Account* aAccount = makeAccount(&aAccountFile);
 			accounts.push_back(aAccount);
 		}
@@ -87,8 +85,8 @@ int getAccountsCreatedNumber(const char* filePath)
 
 	int accountsNumber = 0;
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
 		file.read((char*)&accountsNumber, sizeof(int));
@@ -135,12 +133,14 @@ bool decreaseAccountsCreatedNumber(const char* filePath)
 	int Count = 0;
 
 	std::fstream file;
-	file.open(fullName, std::ios::binary);
+	file.open(fullName, std::ios::in | std::ios::binary);
 
 	if (file.is_open()) {
 		file.read((char*)&Count, sizeof(int));
 		Count--;
 		file.clear();
+		file.close();
+		file.open(fullName, std::ios::out | std::ios::binary);
 		file.write((char*)&Count, sizeof(int));
 		file.close();
 	}

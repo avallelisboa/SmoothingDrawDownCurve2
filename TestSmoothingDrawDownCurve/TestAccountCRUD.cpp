@@ -13,12 +13,12 @@ namespace TestSmoothingDrawDownCurve {
 			int countObtained = Admin::Get().GetAccountsCount();
 			Assert::AreEqual(expectedCount, countObtained);
 		}
-		TEST_METHOD(TestAddAccount) {
+		/*TEST_METHOD(TestAddAccount) {
 			int expectedCount = 1;
 			Admin::Get().MakeAccount("testaccount");
 			int countObtained = Admin::Get().GetAccountsCount();
 			Assert::AreEqual(expectedCount, countObtained);
-		}
+		}*/
 
 	};
 }

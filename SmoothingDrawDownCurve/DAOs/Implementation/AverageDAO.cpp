@@ -1,4 +1,5 @@
-#include "AverageDAO.h"
+#include "../Headers/AverageDAO.h"
+
 
 bool saveAverage(Account* theAccount, Average* av, const char* filePath)
 {
@@ -11,8 +12,8 @@ bool saveAverage(Account* theAccount, Average* av, const char* filePath)
 	strcat(fullName, accountName);
 	strcat(fullName, fileName);
 
-	std::ofstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
 		int index = av->index;
@@ -39,14 +40,12 @@ std::list<Average*> getMovingAverage(Account* theAccount, const char* filePath)
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
-		while (!file.eof()) {
-			AverageFile aAverageFile;
-			file.read((char*)&aAverageFile, sizeof(AverageFile));
-
+		AverageFile aAverageFile;
+		while (file.read((char*)&aAverageFile, sizeof(AverageFile))) {
 			Average* aAverage = makeAverage(&aAverageFile);
 			averages.push_back(aAverage);
 		}
@@ -67,18 +66,16 @@ std::list<Average*> getPartOfMovingAverage(Account* theAccount, size_t startingI
 	strcat(fullName, filePath);
 	strcat(fullName, fileName);
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
 		size_t count = startingIndex;
 		//Skips the registers we do not want to return
 		file.seekg(startingIndex * sizeof(AverageFile), std::ios_base::beg);
 
-		while (!file.eof() && count <= endingIndex) {
-			AverageFile aAverageFile;
-			file.read((char*)&aAverageFile, sizeof(AverageFile));
-
+		AverageFile aAverageFile;
+		while (file.read((char*)&aAverageFile, sizeof(AverageFile)) && count <= endingIndex) {
 			Average* aAverage = makeAverage(&aAverageFile);
 			averages.push_back(aAverage);
 
@@ -102,8 +99,8 @@ int getAveragesCreatedNumber(Account* theAccount, const char* filePath)
 
 	int averagesNumber = 0;
 
-	std::ifstream file;
-	file.open(fullName, std::ios::binary);
+	std::fstream file;
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
 	if (file.is_open()) {
 		file.read((char*)&averagesNumber, sizeof(int));
@@ -125,12 +122,12 @@ bool increaseAverageCreatedNumber(Account* theAccount, const char* filePath) {
 	size_t averagesCreatedNumber = 0;
 
 	std::fstream file;
-	file.open(fullName, std::ios::binary | std::ios::in);
+	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 	file.read((char*)&averagesCreatedNumber, sizeof(size_t));
 	averagesCreatedNumber++;
 	file.close();
 
-	file.open(fullName, std::ios::binary | std::ios::out);
+	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
 	file.clear();
 	file.write((char*)&averagesCreatedNumber, sizeof(size_t));
 	file.close();

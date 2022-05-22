@@ -151,11 +151,11 @@
   <ItemGroup>
     <ClCompile Include="BusinessLogic\AccountBL.cpp" />
     <ClCompile Include="BusinessLogic\Plotting.cpp" />
-    <ClCompile Include="DAOs\AccountDAO.cpp" />
-    <ClCompile Include="DAOs\AverageDAO.cpp" />
-    <ClCompile Include="DAOs\EquityDAO.cpp" />
-    <ClCompile Include="DAOs\Parsing\Parser.cpp" />
-    <ClCompile Include="DAOs\RDAO.cpp" />
+    <ClCompile Include="DAOs\Implementation\AccountDAO.cpp" />
+    <ClCompile Include="DAOs\Implementation\AverageDAO.cpp" />
+    <ClCompile Include="DAOs\Implementation\EquityDAO.cpp" />
+    <ClCompile Include="DAOs\Utilities\Parser.cpp" />
+    <ClCompile Include="DAOs\Implementation\RDAO.cpp" />
     <ClCompile Include="Domain\Models\Account.cpp" />
     <ClCompile Include="Domain\Admin.cpp" />
     <ClCompile Include="Domain\GUIAdmin.cpp" />
@@ -171,17 +171,16 @@
   <ItemGroup>
     <ClInclude Include="BusinessLogic\AccountBL.h" />
     <ClInclude Include="BusinessLogic\Plotting.h" />
-    <ClInclude Include="DAOs\AccountDAO.h" />
-    <ClInclude Include="DAOs\AverageDAO.h" />
-    <ClInclude Include="DAOs\EquityDAO.h" />
     <ClInclude Include="DAOs\FileObjects\AverageFile.h" />
     <ClInclude Include="DAOs\FileObjects\EquityFile.h" />
     <ClInclude Include="DAOs\FileObjects\RFile.h" />
-    <ClInclude Include="DAOs\Parsing\Parser.h" />
-    <ClInclude Include="DAOs\RDAO.h" />
+    <ClInclude Include="DAOs\Headers\AccountDAO.h" />
+    <ClInclude Include="DAOs\Headers\AverageDAO.h" />
+    <ClInclude Include="DAOs\Headers\EquityDAO.h" />
+    <ClInclude Include="DAOs\Headers\RDAO.h" />
+    <ClInclude Include="DAOs\Utilities\Parser.h" />
     <ClInclude Include="Domain\Models\Account.h" />
     <ClInclude Include="Domain\Admin.h" />
-    <ClInclude Include="Domain\Models\Structures\AccountDataToAdd.h" />
     <ClInclude Include="DAOs\FileObjects\AccountFile.h" />
     <ClInclude Include="Domain\Models\Structures\AccountRef.h" />
     <ClInclude Include="Domain\Models\Structures\Average.h" />

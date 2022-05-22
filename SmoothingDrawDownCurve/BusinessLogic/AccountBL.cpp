@@ -18,8 +18,12 @@ float calculateAverage(std::list<Equity*>& values, size_t periodsNumber)
 }
 int calculateEquity(std::list<Equity*>& values, R* r)
 {
-	int lastEquity = values.back()->equity;
-	int newEquity = lastEquity + r->value;
+	int newEquity = 0;
+	if (values.size() > 0) {
+		int lastEquity = values.back()->equity;
+		newEquity = lastEquity + r->value;
+	}
+	else newEquity = r->value;
 	return newEquity;
 }
 
@@ -107,26 +111,27 @@ GetAccountsResult getAccountsBL(const char* filePath)
 	return result;
 }
 
-AddRResult addRBL(const char* filePath, Account* theAccount, AccountDataToAdd& theData)
+AddRResult addRBL(const char* filePath, Account* theAccount, R* theRToAdd)
 {
 	AddRResult result;
-
+	Equity* aEquity = new Equity();
+	Average* aAverage = new Average();
 	auto eqsList = theAccount->GetEquitiesList();
-	int equity = calculateEquity(eqsList, theData.r);
+	aEquity->equity = calculateEquity(eqsList, theRToAdd);
+	theAccount->AddEquity(aEquity);
 	float average = calculateAverage(eqsList, 14);
 	try {
-		theData.r->index = getRsCreatedNumber(theAccount, filePath);
-		theData.equity->equity = equity;
-		theData.equity->index = getEquitiesCreatedNumber(theAccount, filePath);
-		theData.average->average = average;
-		theData.average->index = getAveragesCreatedNumber(theAccount, filePath);
-		theAccount->AddData(theData);
+		theRToAdd->index = getRsCreatedNumber(theAccount, filePath);
+		aEquity->index = getEquitiesCreatedNumber(theAccount, filePath);
+		aAverage->average = average;
+		aAverage->index = getAveragesCreatedNumber(theAccount, filePath);
+		
 
-		saveR(theAccount, theData.r, filePath);
+		saveR(theAccount, theRToAdd, filePath);
 		increaseRsCreatedNumber(theAccount, filePath);
-		saveEquity(theAccount, theData.equity, filePath);
+		saveEquity(theAccount, aEquity, filePath);
 		increaseEquityCreatedNumber(theAccount, filePath);
-		saveAverage(theAccount, theData.average, filePath);
+		saveAverage(theAccount, aAverage, filePath);
 		increaseAverageCreatedNumber(theAccount, filePath);
 
 		result.wasAdded = true;
@@ -148,16 +153,15 @@ size_t getAccountsCountBL(const char* filePath)
 UpdateAccountResult updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection)
 {
 	UpdateAccountResult result;
-
-	try {
-		auto it = accountCollection.begin();
-		while (it != accountCollection.end()) {
-			if ((*it)->Id() == theAccount->Id()) {
-				(*it)->SetName(theAccount->Name());
-				break;
-			}
-			it++;
+	auto it = accountCollection.begin();
+	while (it != accountCollection.end()) {
+		if ((*it)->Id() == theAccount->Id()) {
+			(*it)->SetName(theAccount->Name());
+			break;
 		}
+		it++;
+	}
+	try {		
 		bool wasUpdated = updateAccountList(accountCollection, filePath);
 		if (wasUpdated) {
 			result.wasUpdated = true;

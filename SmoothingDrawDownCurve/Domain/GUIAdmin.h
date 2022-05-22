@@ -35,6 +35,7 @@ private:
 	bool m_wasError = false;
 	std::string m_errorMessage;
 	//Private functions
+	void _updateAccountsList();
 	void _makeAccountsReferences();
 	void _loadData();
 	//Release memory

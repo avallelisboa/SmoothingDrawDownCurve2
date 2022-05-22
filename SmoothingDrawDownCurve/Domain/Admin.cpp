@@ -2,7 +2,6 @@
 
 Admin Admin::s_Instance;
 
-
 bool Admin::LoadData() {
 	GetAccountsResult result = getAccountsBL(m_FilePath);
 	if (result.wasReadFromFile) {
@@ -17,13 +16,10 @@ bool Admin::LoadData() {
 }
 AddRResult Admin::AddR(Account* theAccount, int r)
 {
-	AccountDataToAdd theDataToAdd;
-	theDataToAdd.r = new R();
-	theDataToAdd.r->value = r;
-	theDataToAdd.equity = new Equity();
-	theDataToAdd.average = new Average();
+	R* aR = new R();
+	aR->value = r;
 
-	AddRResult result = addRBL(m_FilePath, theAccount, theDataToAdd);
+	AddRResult result = addRBL(m_FilePath, theAccount, aR);
 
 	return result;
 }
