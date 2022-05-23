@@ -116,15 +116,20 @@ AddRResult addRBL(const char* filePath, Account* theAccount, R* theRToAdd)
 	AddRResult result;
 	Equity* aEquity = new Equity();
 	Average* aAverage = new Average();
-	auto eqsList = theAccount->GetEquitiesList();
-	aEquity->equity = calculateEquity(eqsList, theRToAdd);
-	theAccount->AddEquity(aEquity);
-	float average = calculateAverage(eqsList, 14);
 	try {
 		theRToAdd->index = getRsCreatedNumber(theAccount, filePath);
+		theAccount->AddR(theRToAdd);
+
+		auto eqsList = theAccount->GetEquitiesList();
+		aEquity->equity = calculateEquity(eqsList, theRToAdd);
 		aEquity->index = getEquitiesCreatedNumber(theAccount, filePath);
+		theAccount->AddEquity(aEquity);
+
+		eqsList = theAccount->GetEquitiesList();
+		float average = calculateAverage(eqsList, 14);	
 		aAverage->average = average;
 		aAverage->index = getAveragesCreatedNumber(theAccount, filePath);
+		theAccount->AddAverage(aAverage);
 		
 
 		saveR(theAccount, theRToAdd, filePath);
