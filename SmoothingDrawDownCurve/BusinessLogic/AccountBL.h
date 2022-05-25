@@ -11,14 +11,15 @@
 #include "../DAOs/Headers/EquityDAO.h"
 #include "../DAOs/Headers/AverageDAO.h"
 
+#include <filesystem>
 #include <list>
 #include <exception>
 
 float calculateAverage(std::list<Equity*>& values, size_t periodsNumber);
 int calculateEquity(std::list<Equity*>& values, R* r);
-CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
-AddRResult addRBL(const char* filePath, Account* theAccount, R* theRToAdd);
-size_t getAccountsCountBL(const char* filePath);
-UpdateAccountResult updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection);
-DeleteAccountResult deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
-GetAccountsResult getAccountsBL(const char* filePath);
+CreateAccountResult makeAccountBL(std::filesystem::path& filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
+AddRResult addRBL(std::filesystem::path& filePath, Account* theAccount, R* theRToAdd);
+size_t getAccountsCountBL(std::filesystem::path& filePath);
+UpdateAccountResult updateAccountBL(std::filesystem::path& filePath, Account* theAccount, std::list<Account*>& accountCollection);
+DeleteAccountResult deleteAccountBL(std::filesystem::path& filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count);
+GetAccountsResult getAccountsBL(std::filesystem::path& filePath);

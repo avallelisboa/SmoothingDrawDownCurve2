@@ -156,6 +156,7 @@
     <ClCompile Include="DAOs\Implementation\EquityDAO.cpp" />
     <ClCompile Include="DAOs\Utilities\Parser.cpp" />
     <ClCompile Include="DAOs\Implementation\RDAO.cpp" />
+    <ClCompile Include="DAOs\Utilities\PathsHandler.cpp" />
     <ClCompile Include="Domain\Models\Account.cpp" />
     <ClCompile Include="Domain\Admin.cpp" />
     <ClCompile Include="Domain\GUIAdmin.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="DAOs\Headers\EquityDAO.h" />
     <ClInclude Include="DAOs\Headers\RDAO.h" />
     <ClInclude Include="DAOs\Utilities\Parser.h" />
+    <ClInclude Include="DAOs\Utilities\PathsHandler.h" />
     <ClInclude Include="Domain\Models\Account.h" />
     <ClInclude Include="Domain\Admin.h" />
     <ClInclude Include="DAOs\FileObjects\AccountFile.h" />

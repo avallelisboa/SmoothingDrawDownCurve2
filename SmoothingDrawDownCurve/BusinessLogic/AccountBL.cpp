@@ -27,7 +27,7 @@ int calculateEquity(std::list<Equity*>& values, R* r)
 	return newEquity;
 }
 
-CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
+CreateAccountResult makeAccountBL(std::filesystem::path& filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	CreateAccountResult result;
 	try {
@@ -56,18 +56,37 @@ CreateAccountResult makeAccountBL(const char* filePath, Account* theAccount, std
 	}
 	return result;
 }
-DeleteAccountResult deleteAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
+void _updateIndex(std::list<Account*>& accountCollection) {
+	size_t count = 0;
+	auto it = accountCollection.begin();
+	auto endIt = accountCollection.end();
+	while (it != endIt) {
+		(*it)->SetId(count);
+		it++;
+		count++;
+	}
+}
+DeleteAccountResult deleteAccountBL(std::filesystem::path& filePath, Account* theAccount, std::list<Account*>& accountCollection, size_t& count)
 {
 	DeleteAccountResult result;
-
 	try {
 		accountCollection.remove(theAccount);
+		_updateIndex(accountCollection);
 		bool wasUpdated = updateAccountList(accountCollection, filePath);
 		if (wasUpdated) {
 			bool wasDecresed = decreaseAccountsCreatedNumber(filePath);
 			if (wasDecresed) {
-				result.wasDeleted = true;
-				result.errorMessage = "The account was deleted correctly";
+				bool wasAccountDataDeleted = deleteAccountRs(theAccount, filePath) &&
+											deleteAccountEquities(theAccount, filePath) &&
+											deleteAccountAverages(theAccount, filePath);
+				if (wasAccountDataDeleted) {
+					result.wasDeleted = true;
+					result.errorMessage = "The account was deleted correctly";
+				}
+				else {
+					result.wasDeleted = false;
+					result.errorMessage = "The data of the deleted account could not be deleted";
+				}
 			}
 			else {
 				result.wasDeleted = false;
@@ -87,7 +106,7 @@ DeleteAccountResult deleteAccountBL(const char* filePath, Account* theAccount, s
 	return result;
 }
 
-GetAccountsResult getAccountsBL(const char* filePath)
+GetAccountsResult getAccountsBL(std::filesystem::path& filePath)
 {
 	GetAccountsResult result;
 
@@ -111,7 +130,7 @@ GetAccountsResult getAccountsBL(const char* filePath)
 	return result;
 }
 
-AddRResult addRBL(const char* filePath, Account* theAccount, R* theRToAdd)
+AddRResult addRBL(std::filesystem::path& filePath, Account* theAccount, R* theRToAdd)
 {
 	AddRResult result;
 	Equity* aEquity = new Equity();
@@ -150,12 +169,12 @@ AddRResult addRBL(const char* filePath, Account* theAccount, R* theRToAdd)
 	return result;
 }
 
-size_t getAccountsCountBL(const char* filePath)
+size_t getAccountsCountBL(std::filesystem::path& filePath)
 {
 	return getAccountsCreatedNumber(filePath);
 }
 
-UpdateAccountResult updateAccountBL(const char* filePath, Account* theAccount, std::list<Account*>& accountCollection)
+UpdateAccountResult updateAccountBL(std::filesystem::path& filePath, Account* theAccount, std::list<Account*>& accountCollection)
 {
 	UpdateAccountResult result;
 	auto it = accountCollection.begin();

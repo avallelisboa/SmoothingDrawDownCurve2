@@ -1,16 +1,11 @@
 #include "../Headers/AverageDAO.h"
 
 
-bool saveAverage(Account* theAccount, Average* av, const char* filePath)
+bool saveAverage(Account* theAccount, Average* av, std::filesystem::path& filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_averages.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName,"_averages.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
@@ -28,17 +23,13 @@ bool saveAverage(Account* theAccount, Average* av, const char* filePath)
 
 	return true;
 }
-std::list<Average*> getMovingAverage(Account* theAccount, const char* filePath)
+std::list<Average*> getMovingAverage(Account* theAccount, std::filesystem::path& filePath)
 {
 	std::list<Average*> averages;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_averages.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_averages.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
@@ -54,17 +45,13 @@ std::list<Average*> getMovingAverage(Account* theAccount, const char* filePath)
 
 	return averages;
 }
-std::list<Average*> getPartOfMovingAverage(Account* theAccount, size_t startingIndex, size_t endingIndex, const char* filePath)
+std::list<Average*> getPartOfMovingAverage(Account* theAccount, size_t startingIndex, size_t endingIndex, std::filesystem::path& filePath)
 {
 	std::list<Average*> averages;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_averages.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_averages.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
@@ -86,16 +73,19 @@ std::list<Average*> getPartOfMovingAverage(Account* theAccount, size_t startingI
 
 	return averages;
 }
-int getAveragesCreatedNumber(Account* theAccount, const char* filePath)
+bool deleteAccountAverages(Account* theAccount, std::filesystem::path& filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_averagesNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_averages.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
+
+	return std::filesystem::remove(fullName);
+}
+int getAveragesCreatedNumber(Account* theAccount, std::filesystem::path& filePath)
+{
+	const char* accountName = theAccount->Name();
+	std::filesystem::path fileName = getFileName(accountName, "_averagesNumber.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	int averagesNumber = 0;
 
@@ -109,15 +99,10 @@ int getAveragesCreatedNumber(Account* theAccount, const char* filePath)
 
 	return averagesNumber;
 }
-bool increaseAverageCreatedNumber(Account* theAccount, const char* filePath) {
+bool increaseAverageCreatedNumber(Account* theAccount, std::filesystem::path& filePath) {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_averagesNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_averagesNumber.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	size_t averagesCreatedNumber = 0;
 

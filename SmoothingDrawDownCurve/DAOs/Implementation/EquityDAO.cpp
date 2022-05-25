@@ -1,14 +1,9 @@
 #include "../Headers/EquityDAO.h"
 
-bool saveEquity(Account* theAccount, Equity* eq, const char* filePath){
+bool saveEquity(Account* theAccount, Equity* eq, std::filesystem::path& filePath){
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equities.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_equities.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
@@ -26,16 +21,12 @@ bool saveEquity(Account* theAccount, Equity* eq, const char* filePath){
 
 	return true;
 }
-std::list<Equity*> getEquities(Account* theAccount, const char* filePath) {
+std::list<Equity*> getEquities(Account* theAccount, std::filesystem::path& filePath) {
 	std::list<Equity*> equities;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equities.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_equities.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
@@ -51,16 +42,12 @@ std::list<Equity*> getEquities(Account* theAccount, const char* filePath) {
 
 	return equities;
 }
-std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_t endingIndex, const char* filePath) {
+std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_t endingIndex, std::filesystem::path& filePath) {
 	std::list<Equity*> equities;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equities.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_equities.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
@@ -82,15 +69,18 @@ std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_
 
 	return equities;
 }
-int getEquitiesCreatedNumber(Account* theAccount, const char* filePath) {
+bool deleteAccountEquities(Account* theAccount, std::filesystem::path& filePath)
+{
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equitiesNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_equities.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
+
+	return std::filesystem::remove(fullName);
+}
+int getEquitiesCreatedNumber(Account* theAccount, std::filesystem::path& filePath) {
+	const char* accountName = theAccount->Name();
+	std::filesystem::path fileName = getFileName(accountName, "_equitiesNumber.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	int equitiesNumber = 0;
 
@@ -104,16 +94,11 @@ int getEquitiesCreatedNumber(Account* theAccount, const char* filePath) {
 
 	return equitiesNumber;
 }
-bool increaseEquityCreatedNumber(Account* theAccount, const char* filePath)
+bool increaseEquityCreatedNumber(Account* theAccount, std::filesystem::path& filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_equitiesNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_equitiesNumber.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	size_t equitiesCreatedNumber = 0;
 

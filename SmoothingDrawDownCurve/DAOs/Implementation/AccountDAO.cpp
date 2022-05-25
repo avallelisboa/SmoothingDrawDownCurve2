@@ -1,15 +1,9 @@
 #include "../Headers/AccountDAO.h"
 
-bool saveAccount(Account* theAccount, const char* filePath)
+bool saveAccount(Account* theAccount, std::filesystem::path& filePath)
 {
-	const char* fileName = "accounts.bin";
-	size_t pathsize = strlen(filePath);
-	size_t filesize = strlen(fileName);
-	size_t totalsize = pathsize + filesize;
-	char* fullName = (char*)alloca(totalsize + 1);
-	memset(fullName, 0, totalsize + 1);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = "accounts.bin";
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
@@ -25,18 +19,19 @@ bool saveAccount(Account* theAccount, const char* filePath)
 	
 	return true;
 }
-bool updateAccountList(std::list<Account*>& theAccountList, const char* filePath)
+bool updateAccountList(std::list<Account*>& theAccountList, std::filesystem::path& filePath)
 {
-	const char* fileName = "accounts.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = "accounts.bin";
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
-	std::fstream file;
-	remove(fullName);
-	file.open(fullName, std::ios::out | std::ios::binary);
-	if (file.is_open()) {
+	std::error_code aError;
+	if (!std::filesystem::remove(fullName, aError))
+		return false;
+
+	if (theAccountList.size() > 0)
+	{	
+		std::ofstream file;
+		file.open(fullName, std::ios::out | std::ios::binary);
 		auto it = theAccountList.begin();
 		while (it != theAccountList.end()) {
 			AccountFile af = makeAccountFile(*it);
@@ -45,43 +40,37 @@ bool updateAccountList(std::list<Account*>& theAccountList, const char* filePath
 		}
 		file.close();
 	}
-	else return false;
 
-	return true;
+	return true;	
 }
-std::list<Account*> getAccounts(const char* filePath)
+std::list<Account*> getAccounts(std::filesystem::path& filePath)
 {
 	std::list<Account*> accounts;
 
-	const char* fileName = "accounts.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = "accounts.bin";
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
-	std::fstream file;
-	file.open(fullName, std::ios::in | std::ios::binary | std::ios::in);
+	if (std::filesystem::exists(fullName)) {
+		std::fstream file;
+		file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
 
-	if (file.is_open()) {
-		AccountFile aAccountFile;
-		while (file.read((char*)&aAccountFile, sizeof(AccountFile))) {
-			Account* aAccount = makeAccount(&aAccountFile);
-			accounts.push_back(aAccount);
+		if (file.is_open()) {
+			AccountFile aAccountFile;
+			file.seekg(0, std::ios::beg);
+			while (file.read((char*)&aAccountFile, sizeof(AccountFile))) {
+				Account* aAccount = makeAccount(&aAccountFile);
+				accounts.push_back(aAccount);
+			}
+			file.close();
 		}
-		file.close();
 	}
 
 	return accounts;
 }
-int getAccountsCreatedNumber(const char* filePath)
+int getAccountsCreatedNumber(std::filesystem::path& filePath)
 {
-	const char* fileName = "accountsNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = "accountsNumber.bin";
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	int accountsNumber = 0;
 
@@ -94,15 +83,10 @@ int getAccountsCreatedNumber(const char* filePath)
 	}
 	return accountsNumber;
 }
-
-bool increaseAccountsCreatedNumber(const char* filePath)
+bool increaseAccountsCreatedNumber(std::filesystem::path& filePath)
 {
-	const char* fileName = "accountsNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = "accountsNumber.bin";
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	int Count = 0;
 
@@ -121,14 +105,10 @@ bool increaseAccountsCreatedNumber(const char* filePath)
 	return true;
 }
 
-bool decreaseAccountsCreatedNumber(const char* filePath)
+bool decreaseAccountsCreatedNumber(std::filesystem::path& filePath)
 {
-	const char* fileName = "accountsNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = "accountsNumber.bin";
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	int Count = 0;
 

@@ -5,6 +5,7 @@ struct AccountRef {
     Account* accountPt;
     bool isOpen;
     bool isAddingR;
+    bool mustBeDeleted;
     bool isPlotting;
     int rToAdd;
 };

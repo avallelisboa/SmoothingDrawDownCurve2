@@ -1,15 +1,10 @@
 #include"../Headers/RDAO.h"
 
-bool saveR(Account* theAccount, R* r, const char* filePath)
+bool saveR(Account* theAccount, R* r, std::filesystem::path& filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_rs.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_rs.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::out | std::ios::binary | std::ios::app);
@@ -29,17 +24,13 @@ bool saveR(Account* theAccount, R* r, const char* filePath)
 	return true;
 }
 
-std::list<R*> getRs(Account* theAccount, const char* filePath)
+std::list<R*> getRs(Account* theAccount, std::filesystem::path& filePath)
 {
 	std::list<R*> rs;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_rs.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_rs.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
@@ -56,18 +47,13 @@ std::list<R*> getRs(Account* theAccount, const char* filePath)
 	return rs;
 }
 
-std::list<R*> getNRs(Account* theAccount, size_t startingIndex, size_t endingIndex, const char* filePath)
+std::list<R*> getNRs(Account* theAccount, size_t startingIndex, size_t endingIndex, std::filesystem::path& filePath)
 {
 	std::list<R*> rs;
 
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_rs.bin";
-	size_t totalsize = strlen(filePath) + strlen(fileName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_rs.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	std::fstream file;
 	file.open(fullName, std::ios::in | std::ios::binary | std::ios::app);
@@ -91,16 +77,19 @@ std::list<R*> getNRs(Account* theAccount, size_t startingIndex, size_t endingInd
 
 	return rs;
 }
-int getRsCreatedNumber(Account* theAccount, const char* filePath)
+bool deleteAccountRs(Account* theAccount, std::filesystem::path& filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_rsNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_rs.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
+
+	return std::filesystem::remove(fullName);
+}
+int getRsCreatedNumber(Account* theAccount, std::filesystem::path& filePath)
+{
+	const char* accountName = theAccount->Name();
+	std::filesystem::path fileName = getFileName(accountName, "_rsNumber.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	int rsNumber = 0;
 
@@ -114,16 +103,11 @@ int getRsCreatedNumber(Account* theAccount, const char* filePath)
 
 	return rsNumber;
 }
-bool increaseRsCreatedNumber(Account* theAccount, const char* filePath)
+bool increaseRsCreatedNumber(Account* theAccount, std::filesystem::path& filePath)
 {
 	const char* accountName = theAccount->Name();
-	const char* fileName = "_rsNumber.bin";
-	size_t totalsize = strlen(filePath) + strlen(accountName) + strlen(fileName) + 1;
-	char* fullName = (char*)alloca(totalsize);
-	memset(fullName, 0, totalsize);
-	strcat(fullName, filePath);
-	strcat(fullName, accountName);
-	strcat(fullName, fileName);
+	std::filesystem::path fileName = getFileName(accountName, "_rsNumber.bin");
+	std::filesystem::path fullName = getFullName(filePath, fileName);
 
 	size_t rsCreatedNumber = 0;
 

@@ -6,13 +6,15 @@
 #include "../FileObjects/EquityFile.h"
 #include "../FileObjects/RFile.h"
 #include "../Utilities/Parser.h"
+#include "../Utilities/PathsHandler.h"
+#include <filesystem>
 #include <fstream>
 #include <cstring>
 
 
-bool saveAccount(Account* theAccount, const char* filePath);
-bool updateAccountList(std::list<Account*>& theAccountList, const char* filePath);
-std::list<Account*> getAccounts(const char* filePath);
-int getAccountsCreatedNumber(const char* filePath);
-bool increaseAccountsCreatedNumber(const char* filePath);
-bool decreaseAccountsCreatedNumber(const char* filePath);
+bool saveAccount(Account* theAccount, std::filesystem::path& filePath);
+bool updateAccountList(std::list<Account*>& theAccountList, std::filesystem::path& filePath);
+std::list<Account*> getAccounts(std::filesystem::path& filePath);
+int getAccountsCreatedNumber(std::filesystem::path& filePath);
+bool increaseAccountsCreatedNumber(std::filesystem::path& filePath);
+bool decreaseAccountsCreatedNumber(std::filesystem::path& filePath);

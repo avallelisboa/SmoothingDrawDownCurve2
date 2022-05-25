@@ -5,6 +5,8 @@
 #include "Models/ValidationModels/UpdateAccountResult.h"
 #include "Models/ValidationModels/DeleteAccountResult.h"
 
+#include <filesystem>
+
 class Admin
 {
 public:
@@ -18,7 +20,7 @@ public:
 	bool LoadData();
 	AddRResult AddR(Account* theAccount, int r);
 	CreateAccountResult MakeAccount(char name[20]);
-	UpdateAccountResult UpdateAccount(Account* theAccount, const char* filePath);
+	UpdateAccountResult UpdateAccount(Account* theAccount, std::filesystem::path filePath);
 	DeleteAccountResult DeleteAccount(Account* account);
 private:
 #ifdef _DEBUG
@@ -28,7 +30,7 @@ private:
 #endif
 	~Admin();
 	//Members
-	const char* m_FilePath;
+	std::filesystem::path m_FilePath;
 	static Admin s_Instance;
 	size_t m_AccountsCount;
 	std::list<Account*> m_Accounts;

@@ -2,10 +2,12 @@
 
 #include <fstream>
 #include "../Utilities/Parser.h"
+#include "../Utilities/PathsHandler.h"
 #include "../../Domain/Models/Structures/Equity.h"
 
-bool saveEquity(Account* theAccount, Equity* eq, const char* filePath);
-std::list<Equity*> getEquities(Account* theAccount, const char* filePath);
-std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_t endingIndex, const char* filePath);
-int getEquitiesCreatedNumber(Account* theAccount, const char* filePath);
-bool increaseEquityCreatedNumber(Account* theAccount, const char* filePath);
+bool saveEquity(Account* theAccount, Equity* eq, std::filesystem::path& filePath);
+std::list<Equity*> getEquities(Account* theAccount, std::filesystem::path& filePath);
+std::list<Equity*> getNEquities(Account* theAccount, size_t startingIndex, size_t endingIndex, std::filesystem::path& filePath);
+bool deleteAccountEquities(Account* theAccount, std::filesystem::path& filePath);
+int getEquitiesCreatedNumber(Account* theAccount, std::filesystem::path& filePath);
+bool increaseEquityCreatedNumber(Account* theAccount, std::filesystem::path& filePath);

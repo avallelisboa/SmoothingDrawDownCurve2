@@ -69,6 +69,9 @@
     <ClCompile Include="BusinessLogic\Plotting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DAOs\Utilities\PathsHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vendor\imgui\imconfig.h">
@@ -168,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DAOs\Headers\RDAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DAOs\Utilities\PathsHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

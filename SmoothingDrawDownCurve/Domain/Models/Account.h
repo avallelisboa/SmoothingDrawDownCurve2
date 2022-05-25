@@ -21,6 +21,7 @@ public:
 	Account(int index, char* name);
 	inline const int Id() const { return m_Index; }
 	inline const char* Name() const { return m_Name;}
+	inline void SetId(int id) { m_Index = id; }
 	void SetName(const char* theName);
 	void LoadData(std::list<R*>& rs, std::list<Equity*>& eqs, std::list<Average*>& ma);
 	inline const std::list<R*>& GetRsList() const { return m_Rs; }

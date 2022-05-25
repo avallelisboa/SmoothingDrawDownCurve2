@@ -19,6 +19,7 @@ void GUIAdmin::_makeAccountsReferences()
         accRef->index = count;
         accRef->accountPt = (*accountIt);
         accRef->isOpen = false;
+        accRef->mustBeDeleted = false;
         accRef->isAddingR = false;
         accRef->isPlotting = false;
 
@@ -30,6 +31,18 @@ void GUIAdmin::_makeAccountsReferences()
 }
 void GUIAdmin::_updateAccountsList() {
     m_accounts = Admin::Get().GetAccounts();
+}
+void GUIAdmin::_deleteSelectedAccounts()
+{
+    auto accountIt = m_accountsReferences.begin();
+    while (accountIt != m_accountsReferences.end()) {
+        auto accountRef = *accountIt;
+        if (accountRef->mustBeDeleted) {
+            Admin::Get().DeleteAccount(accountRef->accountPt);
+        }
+        accountIt++;
+    }
+    _loadData();
 }
 void GUIAdmin::_loadData()
 {
@@ -144,7 +157,8 @@ void GUIAdmin::showAccountsListWindow()
     size_t count = 0;
     while (accountIt != m_accountsReferences.end()) {
         const char* accountName = (*accountIt)->accountPt->Name();
-        const char* checkBoxLabel = " Is open?";
+        const char* checkBoxLabel = " is open?";
+        const char* deleteCheckBoxLabel = "must delete?";
         size_t totalsize = strlen(accountName) + strlen(checkBoxLabel) + 1;
         char* checkBoxFullName = (char*)alloca(totalsize);
         memset(checkBoxFullName, 0, totalsize);
@@ -152,12 +166,17 @@ void GUIAdmin::showAccountsListWindow()
         strcat(checkBoxFullName, checkBoxLabel);
 
         ImGui::Checkbox(checkBoxFullName, &(m_accountsReferences[count]->isOpen));
+        ImGui::SameLine();
+        ImGui::Checkbox("must delete?", &(m_accountsReferences[count]->mustBeDeleted));
 
         accountIt++;
         count++;
     }
     if (ImGui::Button("Create Account"))  // Buttons return true when clicked (most widgets return true when edited/activated)
         m_mustShowCreateAccountWindow = true;
+
+    if (ImGui::Button("Delete Selected Accounts"))
+        _deleteSelectedAccounts();
 
     if (m_wasError)
         ImGui::Text(m_errorMessage.c_str());

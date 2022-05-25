@@ -27,7 +27,7 @@ CreateAccountResult Admin::MakeAccount(char name[20]) {
 	Account* aAccount = new Account(m_AccountsCount, name);
 	return makeAccountBL(m_FilePath, aAccount, m_Accounts, m_AccountsCount);
 }
-UpdateAccountResult Admin::UpdateAccount(Account* theAccount, const char* filePath)
+UpdateAccountResult Admin::UpdateAccount(Account* theAccount, std::filesystem::path filePath)
 {
 	return updateAccountBL(filePath, theAccount, m_Accounts);
 }
