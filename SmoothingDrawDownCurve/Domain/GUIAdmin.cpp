@@ -101,7 +101,6 @@ void GUIAdmin::graphicData(AccountRef& theAccount, bool* p_open)
     float (*plotequity)(void*, int) = &getEquity;
     float (*plotmovingaverage)(void*, int) = &getAverage;
 
-
     ImGui::Begin("Graphic data", p_open, flags);
     ImGui::PlotLines("Equity", plotequity, (void*)&equitiesList, equitiesList.size(), 0, NULL, 0.0f, 10.0f, ImVec2(0, 80.0f));
     ImGui::PlotLines("M.A 14", plotmovingaverage, (void*)&movingaverage, movingaverage.size(), 0, NULL, 0.0f, 10.0f, ImVec2(0, 80.0f));
@@ -158,7 +157,7 @@ void GUIAdmin::showAccountsListWindow()
     while (accountIt != m_accountsReferences.end()) {
         const char* accountName = (*accountIt)->accountPt->Name();
         const char* checkBoxLabel = " is open?";
-        const char* deleteCheckBoxLabel = "must delete?";
+        const char* deleteCheckBoxLabel = " must delete?";
         size_t totalsize = strlen(accountName) + strlen(checkBoxLabel) + 1;
         size_t deleteCheckBoxTotalSize = strlen(accountName) + strlen(deleteCheckBoxLabel) + 1;
         char* checkBoxFullName = (char*)alloca(totalsize);
