@@ -160,14 +160,19 @@ void GUIAdmin::showAccountsListWindow()
         const char* checkBoxLabel = " is open?";
         const char* deleteCheckBoxLabel = "must delete?";
         size_t totalsize = strlen(accountName) + strlen(checkBoxLabel) + 1;
+        size_t deleteCheckBoxTotalSize = strlen(accountName) + strlen(deleteCheckBoxLabel) + 1;
         char* checkBoxFullName = (char*)alloca(totalsize);
+        char* deleteCheckBoxFullName = (char*)alloca(deleteCheckBoxTotalSize);
         memset(checkBoxFullName, 0, totalsize);
+        memset(deleteCheckBoxFullName, 0, deleteCheckBoxTotalSize);
         strcat(checkBoxFullName, accountName);
         strcat(checkBoxFullName, checkBoxLabel);
+        strcat(deleteCheckBoxFullName, accountName);
+        strcat(deleteCheckBoxFullName, deleteCheckBoxLabel);
 
         ImGui::Checkbox(checkBoxFullName, &(m_accountsReferences[count]->isOpen));
         ImGui::SameLine();
-        ImGui::Checkbox("must delete?", &(m_accountsReferences[count]->mustBeDeleted));
+        ImGui::Checkbox(deleteCheckBoxFullName, &(m_accountsReferences[count]->mustBeDeleted));
 
         accountIt++;
         count++;

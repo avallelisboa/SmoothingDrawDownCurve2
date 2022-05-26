@@ -149,7 +149,6 @@ AddRResult addRBL(std::filesystem::path& filePath, Account* theAccount, R* theRT
 		aAverage->average = average;
 		aAverage->index = getAveragesCreatedNumber(theAccount, filePath);
 		theAccount->AddAverage(aAverage);
-		
 
 		saveR(theAccount, theRToAdd, filePath);
 		increaseRsCreatedNumber(theAccount, filePath);

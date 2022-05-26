@@ -11,7 +11,7 @@ bool saveEquity(Account* theAccount, Equity* eq, std::filesystem::path& filePath
 	if (file.is_open()) {
 		int index = eq->index;
 		int equity = eq->equity;
-		EquityFile aEquityFile = makeEquityFile(theAccount->Id(), index, equity);
+		EquityFile aEquityFile = makeEquityFile(index, equity);
 
 		file.seekp(0, std::ios_base::end);
 		file.write((char*)&aEquityFile, sizeof(EquityFile));

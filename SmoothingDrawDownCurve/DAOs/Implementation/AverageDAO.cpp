@@ -13,7 +13,7 @@ bool saveAverage(Account* theAccount, Average* av, std::filesystem::path& filePa
 	if (file.is_open()) {
 		int index = av->index;
 		float average = av->average;
-		AverageFile aAverageFile = makeAverageFile(theAccount->Id(), index, average);
+		AverageFile aAverageFile = makeAverageFile(index, average);
 
 		file.seekp(0, std::ios_base::end);
 		file.write((char*)&aAverageFile, sizeof(AverageFile));

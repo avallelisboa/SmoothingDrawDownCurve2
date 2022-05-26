@@ -12,7 +12,7 @@ bool saveR(Account* theAccount, R* r, std::filesystem::path& filePath)
 	if (file.is_open()) {
 		int rIndex = r->index;
 		int value = r->value;
-		RFile af = makeRFile(theAccount->Id(), rIndex, value);
+		RFile af = makeRFile(rIndex, value);
 
 		//Goes to the end of the file
 		file.seekp(0, std::ios_base::end);

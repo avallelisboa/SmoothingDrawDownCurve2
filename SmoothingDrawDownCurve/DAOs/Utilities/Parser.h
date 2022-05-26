@@ -7,9 +7,9 @@
 #include "../FileObjects/RFile.h"
 
 AccountFile makeAccountFile(Account* theAccount);
-RFile makeRFile(int accountIndex, int index, int r);
-EquityFile makeEquityFile(int accountIndex, int index, int equity);
-AverageFile makeAverageFile(int accountIndex, int index, float average);
+RFile makeRFile(int index, int r);
+EquityFile makeEquityFile(int index, int equity);
+AverageFile makeAverageFile(int index, float average);
 Account* makeAccount(AccountFile* theAccountFile);
 R* makeR(RFile* theRFile);
 Equity* makeEquity(EquityFile* theEquityFile);

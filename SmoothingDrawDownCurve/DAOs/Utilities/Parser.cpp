@@ -8,25 +8,22 @@ AccountFile makeAccountFile(Account* theAccount) {
 
 	return aAccountFile;
 }
-RFile makeRFile(int accountIndex, int index, int r) {
+RFile makeRFile(int index, int r) {
 	RFile aRFile;
-	aRFile.accountIndex = accountIndex;
 	aRFile.index = index;
 	aRFile.value = r;
 
 	return aRFile;
 }
-EquityFile makeEquityFile(int accountIndex, int index, int equity) {
+EquityFile makeEquityFile(int index, int equity) {
 	EquityFile aEquityFile;
-	aEquityFile.accountIndex = accountIndex;
 	aEquityFile.index = index;
 	aEquityFile.value = equity;
 
 	return aEquityFile;
 }
-AverageFile makeAverageFile(int accountIndex, int index, float average) {
+AverageFile makeAverageFile(int index, float average) {
 	AverageFile aAverageFile;
-	aAverageFile.accountIndex = accountIndex;
 	aAverageFile.index = index;
 	aAverageFile.value = average;
 
