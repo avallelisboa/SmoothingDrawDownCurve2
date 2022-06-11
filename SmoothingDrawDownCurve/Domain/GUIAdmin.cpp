@@ -83,7 +83,7 @@ void GUIAdmin::addOperation(AccountRef& theAccount, bool* p_open)
     ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar;
     ImGui::Begin("Add operation result", p_open, flags);
     ImGui::InputInt("Enter the operation result in r", &(theAccount.rToAdd));
-    if (ImGui::Button("Add")) {
+    if (ImGui::Button("Add") && theAccount.rToAdd != 0) {
         Admin::Get().AddR(theAccount.accountPt, theAccount.rToAdd);
         theAccount.rToAdd = 0;
         *p_open = false;
