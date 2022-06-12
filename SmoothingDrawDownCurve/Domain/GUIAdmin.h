@@ -1,4 +1,7 @@
 #pragma once
+#include <cmath>
+#include <matplot/matplot.h>
+
 #include "../BusinessLogic/Plotting.h"
 
 #include <imgui.h>
@@ -53,7 +56,7 @@ public:
 	void createAccount();
 	void showCreateAccountWindow();
 	void addOperation(AccountRef& theAccount, bool* p_open);
-	void graphicData(AccountRef& theAccount, bool* p_open);
+	void graphicData(AccountRef& theAccount);
 	void closeAccount(AccountRef& theAccount);
 	void showOpenAccountWindow(AccountRef& theAccount, bool* p_open);
 	void showAccountsListWindow();

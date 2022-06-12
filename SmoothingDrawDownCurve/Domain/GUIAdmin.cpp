@@ -21,7 +21,6 @@ void GUIAdmin::_makeAccountsReferences()
         accRef->isOpen = false;
         accRef->mustBeDeleted = false;
         accRef->isAddingR = false;
-        accRef->isPlotting = false;
 
         m_accountsReferences.push_back(accRef);
 
@@ -90,21 +89,49 @@ void GUIAdmin::addOperation(AccountRef& theAccount, bool* p_open)
     }
     ImGui::End();
 }
-void GUIAdmin::graphicData(AccountRef& theAccount, bool* p_open)
+void GUIAdmin::graphicData(AccountRef& theAccount)
 {
-    ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar;
+    using namespace matplot;
+    std::list<Equity*> equitiesList = theAccount.accountPt->GetEquitiesList();
+    std::list<Average*> movingaverage = theAccount.accountPt->GetMovingAverage();
 
-    Account* p_account = theAccount.accountPt;
-    std::list<Equity*> equitiesList = p_account->GetEquitiesList();
-    std::list<Average*> movingaverage = p_account->GetMovingAverage();
+    std::vector<int> equities;
+    std::vector<int> equitiesIndex;
+    std::vector<double> ma;
 
-    float (*plotequity)(void*, int) = &getEquity;
-    float (*plotmovingaverage)(void*, int) = &getAverage;
+    size_t size = equitiesList.size();
 
-    ImGui::Begin("Graphic data", p_open, flags);
-    ImGui::PlotLines("Equity", plotequity, (void*)&equitiesList, equitiesList.size(), 0, NULL, 0.0f, 10.0f, ImVec2(0, 80.0f));
-    ImGui::PlotLines("M.A 14", plotmovingaverage, (void*)&movingaverage, movingaverage.size(), 0, NULL, 0.0f, 10.0f, ImVec2(0, 80.0f));
-    ImGui::End();
+    equities.reserve(size);
+    equitiesIndex.reserve(size);
+    ma.reserve(size);
+
+    auto equityit = equitiesList.begin();
+    auto averageit = movingaverage.begin();
+    while (equityit != equitiesList.end()) {
+        equities.push_back((*equityit)->equity);
+        equitiesIndex.push_back((*equityit)->index);
+
+        ma.push_back((*averageit)->average);
+
+        equityit++;
+        averageit++;
+    }
+
+    auto p1 = plot(equitiesIndex, equities, "-");
+    p1->display_name("Equities");
+    p1->line_width(3.0f);
+    hold(true);
+    auto p2 = plot(equitiesIndex, ma, "-");
+    p2->display_name("M.A.");
+    p2->line_width(3.0f);
+
+    title("Account Performance");
+    xlabel("Operation Number");
+    ylabel("Equity");
+
+    hold(false);
+    legend();
+    show();
 }
 void GUIAdmin::closeAccount(AccountRef& theAccount)
 {
@@ -138,8 +165,7 @@ void GUIAdmin::showOpenAccountWindow(AccountRef& theAccount, bool* p_open)
         addOperation(theAccount, &(theAccount.isAddingR));
     }
     if (ImGui::Button("Graphic data") && theAccount.accountPt->IsThereEnoughData()) {
-        graphicData(theAccount, &(theAccount.isPlotting));
-        theAccount.isPlotting = true;
+        graphicData(theAccount);
     }
     if (ImGui::Button("Close account"))
         closeAccount(theAccount);
@@ -206,9 +232,6 @@ void GUIAdmin::showOpenAccountsWindows()
             showOpenAccountWindow(**accrefIt, &((*accrefIt)->isOpen));
         if ((*accrefIt)->isAddingR)
             addOperation(**accrefIt, &((*accrefIt)->isAddingR));
-
-        if ((*accrefIt)->isPlotting)
-            graphicData(**accrefIt, &((*accrefIt)->isPlotting));
 
         accrefIt++;
     }

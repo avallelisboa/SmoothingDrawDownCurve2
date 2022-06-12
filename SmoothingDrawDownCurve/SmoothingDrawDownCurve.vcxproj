@@ -88,15 +88,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\headers;$(SolutionDir)Vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\headers\Python;$(SolutionDir)Vendor\headers;$(SolutionDir)Vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;matplot.lib;nodesoup.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\libs\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\headers;$(SolutionDir)Vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\headers\Python;$(SolutionDir)Vendor\headers;$(SolutionDir)Vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -116,8 +116,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;matplot.lib;nodesoup.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\libs\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -195,6 +195,228 @@
     <ClInclude Include="Domain\Models\ValidationModels\UpdateAccountResult.h" />
     <ClInclude Include="Domain\GUIAdmin.h" />
     <ClInclude Include="setupDearIMGui.h" />
+    <ClInclude Include="Vendor\headers\GLFW\glfw3.h" />
+    <ClInclude Include="Vendor\headers\GLFW\glfw3native.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\bars.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\box_chart.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\circles.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\contours.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\error_bar.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\filled_area.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\function_line.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\histogram.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\labels.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\line.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\matrix.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\network.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\parallel_lines.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\stair.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\string_function.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\surface.h" />
+    <ClInclude Include="Vendor\headers\matplot\axes_objects\vectors.h" />
+    <ClInclude Include="Vendor\headers\matplot\backend\backend_interface.h" />
+    <ClInclude Include="Vendor\headers\matplot\backend\backend_registry.h" />
+    <ClInclude Include="Vendor\headers\matplot\backend\gnuplot.h" />
+    <ClInclude Include="Vendor\headers\matplot\backend\opengl.h" />
+    <ClInclude Include="Vendor\headers\matplot\backend\opengl_embed.h" />
+    <ClInclude Include="Vendor\headers\matplot\freestanding\axes_functions.h" />
+    <ClInclude Include="Vendor\headers\matplot\freestanding\axes_lim.h" />
+    <ClInclude Include="Vendor\headers\matplot\freestanding\figure_functions.h" />
+    <ClInclude Include="Vendor\headers\matplot\freestanding\histcounts.h" />
+    <ClInclude Include="Vendor\headers\matplot\freestanding\plot.h" />
+    <ClInclude Include="Vendor\headers\matplot\matplot.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\colors.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\common.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\concepts.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\contourc.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\geodata.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\handle_types.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\keywords.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\popen.h" />
+    <ClInclude Include="Vendor\headers\matplot\util\type_traits.h" />
+    <ClInclude Include="Vendor\headers\numpy\arrayobject.h" />
+    <ClInclude Include="Vendor\headers\numpy\arrayscalars.h" />
+    <ClInclude Include="Vendor\headers\numpy\halffloat.h" />
+    <ClInclude Include="Vendor\headers\numpy\libdivide\libdivide.h" />
+    <ClInclude Include="Vendor\headers\numpy\ndarrayobject.h" />
+    <ClInclude Include="Vendor\headers\numpy\ndarraytypes.h" />
+    <ClInclude Include="Vendor\headers\numpy\noprefix.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_1_7_deprecated_api.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_3kcompat.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_common.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_cpu.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_endian.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_interrupt.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_math.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_no_deprecated_api.h" />
+    <ClInclude Include="Vendor\headers\numpy\npy_os.h" />
+    <ClInclude Include="Vendor\headers\numpy\numpyconfig.h" />
+    <ClInclude Include="Vendor\headers\numpy\oldnumeric.h" />
+    <ClInclude Include="Vendor\headers\numpy\old_defines.h" />
+    <ClInclude Include="Vendor\headers\numpy\random\bitgen.h" />
+    <ClInclude Include="Vendor\headers\numpy\random\distributions.h" />
+    <ClInclude Include="Vendor\headers\numpy\ufuncobject.h" />
+    <ClInclude Include="Vendor\headers\numpy\utils.h" />
+    <ClInclude Include="Vendor\headers\numpy\_neighborhood_iterator_imp.h" />
+    <ClInclude Include="Vendor\headers\numpy\_numpyconfig.h" />
+    <ClInclude Include="Vendor\headers\numpy\__multiarray_api.h" />
+    <ClInclude Include="Vendor\headers\numpy\__ufunc_api.h" />
+    <ClInclude Include="Vendor\headers\Python\abstract.h" />
+    <ClInclude Include="Vendor\headers\Python\asdl.h" />
+    <ClInclude Include="Vendor\headers\Python\ast.h" />
+    <ClInclude Include="Vendor\headers\Python\bitset.h" />
+    <ClInclude Include="Vendor\headers\Python\bltinmodule.h" />
+    <ClInclude Include="Vendor\headers\Python\boolobject.h" />
+    <ClInclude Include="Vendor\headers\Python\bytearrayobject.h" />
+    <ClInclude Include="Vendor\headers\Python\bytesobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cellobject.h" />
+    <ClInclude Include="Vendor\headers\Python\ceval.h" />
+    <ClInclude Include="Vendor\headers\Python\classobject.h" />
+    <ClInclude Include="Vendor\headers\Python\code.h" />
+    <ClInclude Include="Vendor\headers\Python\codecs.h" />
+    <ClInclude Include="Vendor\headers\Python\compile.h" />
+    <ClInclude Include="Vendor\headers\Python\complexobject.h" />
+    <ClInclude Include="Vendor\headers\Python\context.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\abstract.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\bytearrayobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\bytesobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\ceval.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\code.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\dictobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\fileobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\fileutils.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\frameobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\import.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\initconfig.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\interpreteridobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\listobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\methodobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\object.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\objimpl.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\pyerrors.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\pylifecycle.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\pymem.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\pystate.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\sysmodule.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\traceback.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\tupleobject.h" />
+    <ClInclude Include="Vendor\headers\Python\cpython\unicodeobject.h" />
+    <ClInclude Include="Vendor\headers\Python\datetime.h" />
+    <ClInclude Include="Vendor\headers\Python\descrobject.h" />
+    <ClInclude Include="Vendor\headers\Python\dictobject.h" />
+    <ClInclude Include="Vendor\headers\Python\dynamic_annotations.h" />
+    <ClInclude Include="Vendor\headers\Python\enumobject.h" />
+    <ClInclude Include="Vendor\headers\Python\errcode.h" />
+    <ClInclude Include="Vendor\headers\Python\eval.h" />
+    <ClInclude Include="Vendor\headers\Python\exports.h" />
+    <ClInclude Include="Vendor\headers\Python\fileobject.h" />
+    <ClInclude Include="Vendor\headers\Python\fileutils.h" />
+    <ClInclude Include="Vendor\headers\Python\floatobject.h" />
+    <ClInclude Include="Vendor\headers\Python\frameobject.h" />
+    <ClInclude Include="Vendor\headers\Python\funcobject.h" />
+    <ClInclude Include="Vendor\headers\Python\genericaliasobject.h" />
+    <ClInclude Include="Vendor\headers\Python\genobject.h" />
+    <ClInclude Include="Vendor\headers\Python\graminit.h" />
+    <ClInclude Include="Vendor\headers\Python\grammar.h" />
+    <ClInclude Include="Vendor\headers\Python\import.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pegen_interface.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_abstract.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_accu.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_atomic.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_byteswap.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_bytes_methods.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_call.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_ceval.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_code.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_condvar.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_context.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_dtoa.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_fileutils.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_gc.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_getopt.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_gil.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_hamt.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_hashtable.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_import.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_initconfig.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_interp.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_object.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_pathconfig.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_pyerrors.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_pyhash.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_pylifecycle.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_pymem.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_pystate.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_runtime.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_sysmodule.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_traceback.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_tupleobject.h" />
+    <ClInclude Include="Vendor\headers\Python\internal\pycore_warnings.h" />
+    <ClInclude Include="Vendor\headers\Python\interpreteridobject.h" />
+    <ClInclude Include="Vendor\headers\Python\intrcheck.h" />
+    <ClInclude Include="Vendor\headers\Python\iterobject.h" />
+    <ClInclude Include="Vendor\headers\Python\listobject.h" />
+    <ClInclude Include="Vendor\headers\Python\longintrepr.h" />
+    <ClInclude Include="Vendor\headers\Python\longobject.h" />
+    <ClInclude Include="Vendor\headers\Python\marshal.h" />
+    <ClInclude Include="Vendor\headers\Python\memoryobject.h" />
+    <ClInclude Include="Vendor\headers\Python\methodobject.h" />
+    <ClInclude Include="Vendor\headers\Python\modsupport.h" />
+    <ClInclude Include="Vendor\headers\Python\moduleobject.h" />
+    <ClInclude Include="Vendor\headers\Python\namespaceobject.h" />
+    <ClInclude Include="Vendor\headers\Python\node.h" />
+    <ClInclude Include="Vendor\headers\Python\object.h" />
+    <ClInclude Include="Vendor\headers\Python\objimpl.h" />
+    <ClInclude Include="Vendor\headers\Python\odictobject.h" />
+    <ClInclude Include="Vendor\headers\Python\opcode.h" />
+    <ClInclude Include="Vendor\headers\Python\osdefs.h" />
+    <ClInclude Include="Vendor\headers\Python\osmodule.h" />
+    <ClInclude Include="Vendor\headers\Python\parsetok.h" />
+    <ClInclude Include="Vendor\headers\Python\patchlevel.h" />
+    <ClInclude Include="Vendor\headers\Python\picklebufobject.h" />
+    <ClInclude Include="Vendor\headers\Python\pyarena.h" />
+    <ClInclude Include="Vendor\headers\Python\pycapsule.h" />
+    <ClInclude Include="Vendor\headers\Python\pyconfig.h" />
+    <ClInclude Include="Vendor\headers\Python\pyctype.h" />
+    <ClInclude Include="Vendor\headers\Python\pydebug.h" />
+    <ClInclude Include="Vendor\headers\Python\pydtrace.h" />
+    <ClInclude Include="Vendor\headers\Python\pyerrors.h" />
+    <ClInclude Include="Vendor\headers\Python\pyexpat.h" />
+    <ClInclude Include="Vendor\headers\Python\pyfpe.h" />
+    <ClInclude Include="Vendor\headers\Python\pyframe.h" />
+    <ClInclude Include="Vendor\headers\Python\pyhash.h" />
+    <ClInclude Include="Vendor\headers\Python\pylifecycle.h" />
+    <ClInclude Include="Vendor\headers\Python\pymacconfig.h" />
+    <ClInclude Include="Vendor\headers\Python\pymacro.h" />
+    <ClInclude Include="Vendor\headers\Python\pymath.h" />
+    <ClInclude Include="Vendor\headers\Python\pymem.h" />
+    <ClInclude Include="Vendor\headers\Python\pyport.h" />
+    <ClInclude Include="Vendor\headers\Python\pystate.h" />
+    <ClInclude Include="Vendor\headers\Python\pystrcmp.h" />
+    <ClInclude Include="Vendor\headers\Python\pystrhex.h" />
+    <ClInclude Include="Vendor\headers\Python\pystrtod.h" />
+    <ClInclude Include="Vendor\headers\Python\Python-ast.h" />
+    <ClInclude Include="Vendor\headers\Python\Python.h" />
+    <ClInclude Include="Vendor\headers\Python\pythonrun.h" />
+    <ClInclude Include="Vendor\headers\Python\pythread.h" />
+    <ClInclude Include="Vendor\headers\Python\pytime.h" />
+    <ClInclude Include="Vendor\headers\Python\py_curses.h" />
+    <ClInclude Include="Vendor\headers\Python\rangeobject.h" />
+    <ClInclude Include="Vendor\headers\Python\setobject.h" />
+    <ClInclude Include="Vendor\headers\Python\sliceobject.h" />
+    <ClInclude Include="Vendor\headers\Python\structmember.h" />
+    <ClInclude Include="Vendor\headers\Python\structseq.h" />
+    <ClInclude Include="Vendor\headers\Python\symtable.h" />
+    <ClInclude Include="Vendor\headers\Python\sysmodule.h" />
+    <ClInclude Include="Vendor\headers\Python\token.h" />
+    <ClInclude Include="Vendor\headers\Python\traceback.h" />
+    <ClInclude Include="Vendor\headers\Python\tracemalloc.h" />
+    <ClInclude Include="Vendor\headers\Python\tupleobject.h" />
+    <ClInclude Include="Vendor\headers\Python\typeslots.h" />
+    <ClInclude Include="Vendor\headers\Python\ucnhash.h" />
+    <ClInclude Include="Vendor\headers\Python\unicodeobject.h" />
+    <ClInclude Include="Vendor\headers\Python\warnings.h" />
+    <ClInclude Include="Vendor\headers\Python\weakrefobject.h" />
     <ClInclude Include="Vendor\imgui\imconfig.h" />
     <ClInclude Include="Vendor\imgui\imgui.h" />
     <ClInclude Include="Vendor\imgui\imgui_impl_glfw.h" />
@@ -206,7 +428,17 @@
     <ClInclude Include="Vendor\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="Vendor\libs\glfw3.lib" />
+    <Library Include="Vendor\libs\debug\glfw3.lib" />
+    <Library Include="Vendor\libs\debug\matplot.lib" />
+    <Library Include="Vendor\libs\debug\nodesoup.lib" />
+    <Library Include="Vendor\libs\debug\npymath.lib" />
+    <Library Include="Vendor\libs\debug\python39_d.lib" />
+    <Library Include="Vendor\libs\Matplot++\nodesoup.lib" />
+    <Library Include="Vendor\libs\release\glfw3.lib" />
+    <Library Include="Vendor\libs\release\matplot.lib" />
+    <Library Include="Vendor\libs\release\nodesoup.lib" />
+    <Library Include="Vendor\libs\release\npymath.lib" />
+    <Library Include="Vendor\libs\release\python39_d.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
