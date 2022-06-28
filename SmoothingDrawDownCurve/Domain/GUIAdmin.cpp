@@ -131,7 +131,6 @@ void GUIAdmin::graphicData(AccountRef& theAccount)
 
     hold(false);
     legend();
-    show();
 }
 void GUIAdmin::closeAccount(AccountRef& theAccount)
 {
